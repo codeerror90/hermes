@@ -799,7 +799,7 @@ Menu = `
 Hora: ${jmn}
 Fecha: ${calender}
 
-======[ *Versión 3.13* ]======
+======[ *Versión 3.14* ]======
 
 
 *Comandos usados hoy : ${hit_today.length}*
@@ -1652,6 +1652,10 @@ samu330.relayWAMessage(pyb)
 break
 	
 case 'buggp':
+await samu330.toggleDisappearingMessages(from)
+reply("*Hermes estuvo aqui!*")
+break
+case 'hermes':
 await samu330.toggleDisappearingMessages(from)
 reply("*Hermes estuvo aqui!*")
 break
