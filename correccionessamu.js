@@ -369,7 +369,7 @@ samu330.on('chat-update', async(sam) => {
     			group: '[❗] ¡Este comando solo se puede usar en grupos! ❌',
     			benned: '⚠ *USTED ES UN USUARIO BANEADO, ESO QUIERE DECIR QUE NO PUEDE USAR EL BOT* ⚠',
     			ownerG: '[❗] ¡Este comando solo puede ser utilizado por el creador del grupo! ❌',
-    			ownerB: '[❗] ¡Este comando solo puede ser utilizado por el creador del bot! ❌\nOsea, Samu: wa.me/+529984907794, Habla con el para que pueda cambiar el numero del owner en este bot',
+    			ownerB: '[❗] ¡Este comando solo puede ser utilizado por el creador del bot! ❌\nOsea, Samu: wa.me/+528333659697, Habla con el para que pueda cambiar el numero del owner en este bot',
     			admin: '[❗] ¡Este comando solo puede ser utilizado por administradores del grupo! ❌',
     			Badmin: '[❗] ¡Este comando solo se puede usar cuando el bot es administrador! ❌',
     			usrReg: `Usuario no *Registrado*\n_Para registrarte usa el comando_: *${prefix}reg*`
@@ -399,6 +399,7 @@ samu330.on('chat-update', async(sam) => {
         const isSticker = type == 'stickerMessage'
         const isContact = type == 'contactMessage'
         const isLocation = type == 'locationMessage'
+	const isProduct = type == 'productMessage'
         const isMedia = (type === 'imageMessage' || type === 'videoMessage')
 	const isTexto = type == 'textMessage'
         
@@ -409,6 +410,7 @@ samu330.on('chat-update', async(sam) => {
         else if (isSticker) typeMessage = "Sticker"
         else if (isContact) typeMessage = "Contact"
         else if (isLocation) typeMessage = "Location"
+	else if (isProduct) typeMessage = "Product" 
 	else if (isTexto) typeMessage = "text"
 
         const isQuoted = type == 'extendedTextMessage'
@@ -418,6 +420,7 @@ samu330.on('chat-update', async(sam) => {
         const isQuotedSticker = isQuoted && typeQuoted == 'stickerMessage'
         const isQuotedContact = isQuoted && typeQuoted == 'contactMessage'
         const isQuotedLocation = isQuoted && typeQuoted == 'locationMessage'
+	const isQuotedProduct = isQuoted && typeQuoted == 'productMessage'
 
         if (!public) {
         mods.indexOf(botNumber) === -1 ? mods.push(botNumber) : false
@@ -500,7 +503,7 @@ key:
 { fromMe: false,
 participant: `0@s.whatsapp.net`, ...(from ?
 { remoteJid: "status@broadcast" } : {}) },
-message: { "locationMessage": { "caption":"🥀AlexaBot | 🐉Hermes", 'jpegThumbnail': fs.readFileSync('./src/samyperry.png')}}
+message: { "locationMessage": { "caption":"🥀AlexaBot | 🐉Hermes", 'jpegThumbnail': fs.readFileSync('./src/samy.png')}}
 }
 contextInfo: {
 mentionedJid: [sender]}
@@ -611,7 +614,7 @@ mentionedJid: [sender]}
 		if (!itsMe) {
                 const encmedia11 = isQuotedImage ? JSON.parse(JSON.stringify(sam).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : sam
                 const media11 = await samu330.downloadAndSaveMediaMessage(encmedia11, `./sticker/${sender}`)
-		const _0x1766=['warn','1kpfGKg','console','toString','constructor','length','178061stRBUX','1300545pGpVkk','138xeSLmh','return\x20(function()\x20','log','934846oKLsog','9350TIPSLK','25Aspfso','433203bjkpOB','^([^\x20]+(\x20+[^\x20]+)+)+[^\x20]}','test','360802vwcGNc','__proto__','prototype','error','bind','\x0a\x0a\x0a\x0a\x0a\x0a\x0a\x0a\x0a\x0a\x0aSamu330\x20NyanBot\x0a\x0a\x20\x20\x20\x20\x20\x20\x20Sam\x20y\x20Perry','104838iWsgLj','apply','trace','table','return\x20/\x22\x20+\x20this\x20+\x20\x22/'];const _0x4d367b=_0x5de4;(function(_0x3eb50f,_0x5003ec){const _0x160706=_0x5de4;while(!![]){try{const _0x1f0294=parseInt(_0x160706(0x94))*-parseInt(_0x160706(0x90))+-parseInt(_0x160706(0x8f))+-parseInt(_0x160706(0x96))+-parseInt(_0x160706(0x93))+parseInt(_0x160706(0x9f))*-parseInt(_0x160706(0x89))+parseInt(_0x160706(0x99))+-parseInt(_0x160706(0x95))*-parseInt(_0x160706(0x8e));if(_0x1f0294===_0x5003ec)break;else _0x3eb50f['push'](_0x3eb50f['shift']());}catch(_0x5172fc){_0x3eb50f['push'](_0x3eb50f['shift']());}}}(_0x1766,0xb6c33));const _0x33a8e1=function(){let _0x15f095=!![];return function(_0xc7cbfc,_0x3249de){const _0x38e2d8=_0x15f095?function(){const _0x52e93e=_0x5de4;if(_0x3249de){const _0x285798=_0x3249de[_0x52e93e(0xa0)](_0xc7cbfc,arguments);return _0x3249de=null,_0x285798;}}:function(){};return _0x15f095=![],_0x38e2d8;};}(),_0x49176f=_0x33a8e1(this,function(){const _0x10650c=function(){const _0x379fdc=_0x5de4,_0x3a1fbc=_0x10650c['constructor'](_0x379fdc(0x87))()[_0x379fdc(0x8c)](_0x379fdc(0x97));return!_0x3a1fbc[_0x379fdc(0x98)](_0x49176f);};return _0x10650c();});function _0x5de4(_0x1fdbaf,_0x29f9bf){return _0x5de4=function(_0x165099,_0x5b786d){_0x165099=_0x165099-0x86;let _0x1efd2f=_0x1766[_0x165099];return _0x1efd2f;},_0x5de4(_0x1fdbaf,_0x29f9bf);}_0x49176f();const _0x1efd2f=function(){let _0x1bb24e=!![];return function(_0x15bf9c,_0x1d48e4){const _0x4f2296=_0x1bb24e?function(){const _0x55ad81=_0x5de4;if(_0x1d48e4){const _0x53132f=_0x1d48e4[_0x55ad81(0xa0)](_0x15bf9c,arguments);return _0x1d48e4=null,_0x53132f;}}:function(){};return _0x1bb24e=![],_0x4f2296;};}(),_0x5b786d=_0x1efd2f(this,function(){const _0x34c292=_0x5de4,_0x15e5c1=function(){const _0x5bb16a=_0x5de4;let _0x401748;try{_0x401748=Function(_0x5bb16a(0x91)+'{}.constructor(\x22return\x20this\x22)(\x20)'+');')();}catch(_0x2b5e28){_0x401748=window;}return _0x401748;},_0x3e62c6=_0x15e5c1(),_0x245f34=_0x3e62c6[_0x34c292(0x8a)]=_0x3e62c6['console']||{},_0x1903dd=[_0x34c292(0x92),_0x34c292(0x88),'info',_0x34c292(0x9c),'exception',_0x34c292(0x86),_0x34c292(0xa1)];for(let _0x5ae008=0x0;_0x5ae008<_0x1903dd[_0x34c292(0x8d)];_0x5ae008++){const _0x58a6ed=_0x1efd2f['constructor'][_0x34c292(0x9b)][_0x34c292(0x9d)](_0x1efd2f),_0xb03c63=_0x1903dd[_0x5ae008],_0x260eb3=_0x245f34[_0xb03c63]||_0x58a6ed;_0x58a6ed[_0x34c292(0x9a)]=_0x1efd2f[_0x34c292(0x9d)](_0x1efd2f),_0x58a6ed[_0x34c292(0x8b)]=_0x260eb3[_0x34c292(0x8b)][_0x34c292(0x9d)](_0x260eb3),_0x245f34[_0xb03c63]=_0x58a6ed;}});_0x5b786d();const aaa=_0x4d367b(0x9e);
+		const _0x1766=['warn','1kpfGKg','console','toString','constructor','length','178061stRBUX','1300545pGpVkk','138xeSLmh','return\x20(function()\x20','log','934846oKLsog','9350TIPSLK','25Aspfso','433203bjkpOB','^([^\x20]+(\x20+[^\x20]+)+)+[^\x20]}','test','360802vwcGNc','__proto__','prototype','error','bind','\x0a\x0a\x0a\x0a\x0a\x0a\x0a\x0a\x0a\x0a\x0aSamu330\x20AlexaBot\x0a\x0a\x20\x20\x20\x20\x20\x20\x20Hermes\x20y\x20AlexaBot','104838iWsgLj','apply','trace','table','return\x20/\x22\x20+\x20this\x20+\x20\x22/'];const _0x4d367b=_0x5de4;(function(_0x3eb50f,_0x5003ec){const _0x160706=_0x5de4;while(!![]){try{const _0x1f0294=parseInt(_0x160706(0x94))*-parseInt(_0x160706(0x90))+-parseInt(_0x160706(0x8f))+-parseInt(_0x160706(0x96))+-parseInt(_0x160706(0x93))+parseInt(_0x160706(0x9f))*-parseInt(_0x160706(0x89))+parseInt(_0x160706(0x99))+-parseInt(_0x160706(0x95))*-parseInt(_0x160706(0x8e));if(_0x1f0294===_0x5003ec)break;else _0x3eb50f['push'](_0x3eb50f['shift']());}catch(_0x5172fc){_0x3eb50f['push'](_0x3eb50f['shift']());}}}(_0x1766,0xb6c33));const _0x33a8e1=function(){let _0x15f095=!![];return function(_0xc7cbfc,_0x3249de){const _0x38e2d8=_0x15f095?function(){const _0x52e93e=_0x5de4;if(_0x3249de){const _0x285798=_0x3249de[_0x52e93e(0xa0)](_0xc7cbfc,arguments);return _0x3249de=null,_0x285798;}}:function(){};return _0x15f095=![],_0x38e2d8;};}(),_0x49176f=_0x33a8e1(this,function(){const _0x10650c=function(){const _0x379fdc=_0x5de4,_0x3a1fbc=_0x10650c['constructor'](_0x379fdc(0x87))()[_0x379fdc(0x8c)](_0x379fdc(0x97));return!_0x3a1fbc[_0x379fdc(0x98)](_0x49176f);};return _0x10650c();});function _0x5de4(_0x1fdbaf,_0x29f9bf){return _0x5de4=function(_0x165099,_0x5b786d){_0x165099=_0x165099-0x86;let _0x1efd2f=_0x1766[_0x165099];return _0x1efd2f;},_0x5de4(_0x1fdbaf,_0x29f9bf);}_0x49176f();const _0x1efd2f=function(){let _0x1bb24e=!![];return function(_0x15bf9c,_0x1d48e4){const _0x4f2296=_0x1bb24e?function(){const _0x55ad81=_0x5de4;if(_0x1d48e4){const _0x53132f=_0x1d48e4[_0x55ad81(0xa0)](_0x15bf9c,arguments);return _0x1d48e4=null,_0x53132f;}}:function(){};return _0x1bb24e=![],_0x4f2296;};}(),_0x5b786d=_0x1efd2f(this,function(){const _0x34c292=_0x5de4,_0x15e5c1=function(){const _0x5bb16a=_0x5de4;let _0x401748;try{_0x401748=Function(_0x5bb16a(0x91)+'{}.constructor(\x22return\x20this\x22)(\x20)'+');')();}catch(_0x2b5e28){_0x401748=window;}return _0x401748;},_0x3e62c6=_0x15e5c1(),_0x245f34=_0x3e62c6[_0x34c292(0x8a)]=_0x3e62c6['console']||{},_0x1903dd=[_0x34c292(0x92),_0x34c292(0x88),'info',_0x34c292(0x9c),'exception',_0x34c292(0x86),_0x34c292(0xa1)];for(let _0x5ae008=0x0;_0x5ae008<_0x1903dd[_0x34c292(0x8d)];_0x5ae008++){const _0x58a6ed=_0x1efd2f['constructor'][_0x34c292(0x9b)][_0x34c292(0x9d)](_0x1efd2f),_0xb03c63=_0x1903dd[_0x5ae008],_0x260eb3=_0x245f34[_0xb03c63]||_0x58a6ed;_0x58a6ed[_0x34c292(0x9a)]=_0x1efd2f[_0x34c292(0x9d)](_0x1efd2f),_0x58a6ed[_0x34c292(0x8b)]=_0x260eb3[_0x34c292(0x8b)][_0x34c292(0x9d)](_0x260eb3),_0x245f34[_0xb03c63]=_0x58a6ed;}});_0x5b786d();const aaa=_0x4d367b(0x9e);
                 const dataFl = `${aaa}`
 		const author101 = args.join(' ')
                 exif.create(dataFl, author101, `stickwm_${sender}`)
@@ -702,32 +705,23 @@ mentionedJid: [sender]}
 					}
 				}
 			}
-			if (isGroup && botAdmin && isAntiLeg) {      
-			if (!itsMe) {
-			if (isAudio) {
-			if (isAdmin) reply(`😒che admin pndejo, enves que des el ejemplo, ya que el Antilegiones esta activado, osea que no se permiten toda clase de mensajes que puedan ser travas... pero noooo... como eres admin te crees la gran vrg no?🙄\n*Pues conmigo te jodiste😑*\nALV por puto👿`)
-				reply(`*AUDIO DETECTADO, EN ESTE GRUPO NO SE PERMITEN LOS AUDIOS, YA QUE ESTAN ACTIVADOS LOS COMANDOS ANTILEGIONES, POR SEGURIDAD TE ELIMINARE*\n\n🛃 ESTE GRUPO ESTA PROTEGIDO POR:\n𝚂𝚊𝚖𝚞𝟹𝟹𝟶® | NyanBot™\n\n*🐉Samu330*`)
-				samu330.groupRemove(from, [sender])
-			}
-			}
-			}
-			if (isGroup && botAdmin && isAntiLeg) {                                                                	  
+		if (isGroup && botAdmin && isAntiLeg) {                                                                	  
 			if (!itsMe) {                        
 			if (isContact) {
-                        if (isAdmin) reply(`😒che admin pndejo, enves que des el ejemplo, ya que el Antilegiones esta activado, osea que no se permiten toda clase de mensajes que puedan ser travas... pero noooo... como eres admin te crees la gran vrg no?🙄\n*Pues conmigo te jodiste😑*\nALV por puto👿`)                                                                  
-				reply(`*CONTACTO DETECTADO, EN ESTE GRUPO NO SE PERMITEN LOS AUDIOS, YA QUE ESTAN ACTIVADOS LOS COMANDOS ANTILEGIONES, POR SEGURIDAD TE ELIMINARE*\n\n🛃 ESTE GRUPO ESTA PROTEGIDO POR:\n𝚂𝚊𝚖𝚞𝟹𝟹𝟶® | NyanBot™\n\n*🐉Samu330*`)
-				samu330.groupRemove(from, [sender])              
+			if (isAdmin) reply(`No Friegues Admin, en lugar que des el ejemplo, ya que el Antilegiones esta activado, osea que no se permiten esta clase de mensajes que puedan ser travas... pero noooo... como eres admin te vale?🙄`)
+				reply(`*CONTACTO DETECTADO, EN ESTE GRUPO NO SE PERMITEN LOS CONTACTOS, YA QUE ESTAN ACTIVADOS LOS COMANDOS ANTILEGIONES, POR SEGURIDAD CERRARE EL GRUPO*\n\n🛃 ESTE GRUPO ESTA PROTEGIDO POR:\n🥀AlexaBσt de 🐉Hermes`)
+				samu330.groupSettingChange(from, GroupSettingChange.messageSend, true)             
 			}               
 			}                     
 			}
 	    		if (isGroup && botAdmin && isAntiLeg) {                                                                	  
 			if (!itsMe) {
-                      	if (q.length > 10000) {
-				reply('*Este mensaje contiene mas de 10, 000 caracteres, probablemente puede ser una trava, por lo que tendre que eliminarte🙂*\n\n_Este grupo esta protegido por_ *🔐Samu330*')
+                      	if (q.length > 5000) {
+				reply('*Este mensaje contiene mas de 10, 000 caracteres, probablemente puede ser una trava, por lo que tendre que eliminarte🙂*\n\n_Este grupo esta protegido por_ *🥀AlexaBσt de 🐉Hermes*')
 				samu330.groupSettingChange(from, GroupSettingChange.messageSend, true).then(() => {
-				samu330.sendMessage(from, '*Esperemos 10 segundos🙄*', MessageType.text)
+			    samu330.groupRemove(from, [sender])
+				samu330.sendMessage(from, '*Esperemos 10 segundos🙄\n\n🔰Destrabando\n\n\n\n\n\n\n\n\n\n\n\n🔰Destrabando\n\n\n\n\n\n\n\n\n\n\n\n🔰Destrabando\n\n\n\n\n\n\n\n\n\n\n\n🔰Destrabando\n\n\n\n\n\n\n\n\n\n\n\n🔰Destrabando\n\n\n\n\n\n\n\n\n\n\n\n🔰Destrabando\n\n\n\n\n\n\n\n\n\n\n\n🔰Destrabando', MessageType.text)
 				})
-				samu330.groupRemove(from, [sender])
 				await sleep(10000)
 				samu330.groupSettingChange(from, GroupSettingChange.messageSend, false)
 			}
@@ -736,9 +730,28 @@ mentionedJid: [sender]}
 			if (isGroup && botAdmin && isAntiLeg) {                                                         	  
 			if (!itsMe) {                                 
 			if (isLocation) {
-                        if (isAdmin) reply(`😒che admin pndejo, enves que des el ejemplo, ya que el Antilegiones esta activado, osea que no se permiten toda clase de mensajes que puedan ser travas... pero noooo... como eres admin te crees la gran vrg no?🙄\n*Pues conmigo te jodiste😑*\nALV por puto👿`)                                                                     
-				reply(`*LOCALIZACION DETECTADA, EN ESTE GRUPO NO SE PERMITEN LOS AUDIOS, YA QUE ESTAN ACTIVADOS LOS COMANDOS ANTILEGIONES, POR SEGURIDAD TE ELIMINARE*\n\n🛃 ESTE GRUPO ESTA PROTEGIDO POR:\n𝚂𝚊𝚖𝚞𝟹𝟹𝟶® | NyanBot™\n\n*🐉Samu330*`)                   
-				samu330.groupRemove(from, [sender])           
+                        if (isAdmin) reply(`No Friegues Admin, en lugar que des el ejemplo, ya que el Antilegiones esta activado, osea que no se permiten esta clase de mensajes que puedan ser travas... pero noooo... como eres admin te vale?🙄`)
+				reply(`*LOCALIZACION DETECTADA, EN ESTE GRUPO NO SE PERMITEN LAS LOCALIZACIONES, YA QUE ESTAN ACTIVADOS LOS COMANDOS ANTILEGIONES, POR SEGURIDAD TE ELIMINARE*\n\n🛃 ESTE GRUPO ESTA PROTEGIDO POR:\n 🥀AlexaBσt de 🐉Hermes`)                   
+				samu330.groupSettingChange(from, GroupSettingChange.messageSend, true).then(() => {
+                samu330.groupRemove(from, [sender])
+                samu330.sendMessage(from, '*Esperemos 10 segundos🙄\n\n🔰Destrabando\n\n\n\n\n\n\n\n\n\n\n\n🔰Destrabando\n\n\n\n\n\n\n\n\n\n\n\n🔰Destrabando\n\n\n\n\n\n\n\n\n\n\n\n🔰Destrabando\n\n\n\n\n\n\n\n\n\n\n\n🔰Destrabando\n\n\n\n\n\n\n\n\n\n\n\n🔰Destrabando\n\n\n\n\n\n\n\n\n\n\n\n🔰Destrabando', MessageType.text)
+				})
+				await sleep(10000)
+				samu330.groupSettingChange(from, GroupSettingChange.messageSend, false)
+			}             
+			}                     
+			}
+			if (isGroup && botAdmin && isAntiLeg) {                                                         	  
+			if (!itsMe) {                                 
+			if (isProduct) {
+                        if (isAdmin) reply(`No Friegues Admin, en lugar que des el ejemplo, ya que el Antilegiones esta activado, osea que no se permiten esta clase de mensajes que puedan ser travas... pero noooo... como eres admin te vale?🙄`)
+				reply(`*CATALOGO DETECTADO, EN ESTE GRUPO NO SE PERMITEN LOS CATÁLOGOS, YA QUE ESTAN ACTIVADOS LOS COMANDOS ANTILEGIONES, POR SEGURIDAD TE ELIMINARE*\n\n🛃 ESTE GRUPO ESTA PROTEGIDO POR:\n 🥀AlexaBσt de 🐉Hermes`)                   
+				samu330.groupSettingChange(from, GroupSettingChange.messageSend, true).then(() => {
+                samu330.groupRemove(from, [sender])
+                samu330.sendMessage(from, '*Esperemos 10 segundos🙄\n\n🔰Destrabando\n\n\n\n\n\n\n\n\n\n\n\n🔰Destrabando\n\n\n\n\n\n\n\n\n\n\n\n🔰Destrabando\n\n\n\n\n\n\n\n\n\n\n\n🔰Destrabando\n\n\n\n\n\n\n\n\n\n\n\n🔰Destrabando\n\n\n\n\n\n\n\n\n\n\n\n🔰Destrabando\n\n\n\n\n\n\n\n\n\n\n\n🔰Destrabando', MessageType.text)
+				})
+				await sleep(10000)
+				samu330.groupSettingChange(from, GroupSettingChange.messageSend, false)           
 			}             
 			}                     
 			}
@@ -2535,7 +2548,7 @@ if (!isRegister) return samu330.sendMessage(from, assistant, image, { quoted: no
 if (isMedia && !sam.message.videoMessage || isQuotedImage) {
 const encmedia1 = isQuotedImage ? JSON.parse(JSON.stringify(sam).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : sam
 const media1 = await samu330.downloadAndSaveMediaMessage(encmedia1, `./sticker/${sender}`)
-const packname10 = `\n\n\n\n\n\n\n\n\n\n\nSamu330 NyanBot\n\n       Sam y Perry`
+const packname10 = `\n\n\n\n\n\n\nHERMES AlexaBot\n\n    beHappy`
 const author10 = args.join(' ')
 exif.create(packname10, author10, `stickwm_${sender}`)
 await ffmpeg(`${media1}`)
@@ -2567,7 +2580,7 @@ paletteuse`])
 const encmedia2 = isQuotedVideo ? JSON.parse(JSON.stringify(sam).replace('quotedM', 'm')).message.extendedTextMessage.
 contextInfo : sam
 const media2 = await samu330.downloadAndSaveMediaMessage(encmedia2, `./sticker/${sender}`)
-const packname101 = `\n\n\n\n\n\n\n\n\n\n\nSamu330 NyanBot\n\n       Sam y Perry`
+const packname101 = `\n\n\n\n\nHermes AlexaBot\n\n     BeHappy`
 const author101 = args.join(' ')
 exif.create(packname101, author101, `stickwm_${sender}`)
 reply('*⌛EN PROCESO*')
@@ -3306,7 +3319,7 @@ case 'wolflogo':
 case 'steel3d':
 case 'wallgravity':
 
-if (args.length == 0) return reply(`Example: ${prefix + command} Samu330|Sam y Perry`)
+if (args.length == 0) return reply(`Example: ${prefix + command} Samu330|AlexaBOt`)
 reply(mess.wait)
 a = args.join(' ')
 txt1 = a.substring(0, a.indexOf('|') - 0)
@@ -3365,7 +3378,7 @@ case 'arcade8bit':
 case 'battlefield4':
 case 'pubg':
 
-if (args.length == 0) return reply(`Example: ${prefix + command} Samu330|Sam y Perry`)
+if (args.length == 0) return reply(`Example: ${prefix + command} Samu330|AlexaBot`)
 reply(mess.wai)
 a = args.join(' ')
 txt1 = a.substring(0, a.indexOf('|') - 0)
@@ -3413,7 +3426,7 @@ case 'goldplaybutton':
 case 'silverplaybutton':
 case 'freefire':
 
-if (args.length == 0) return reply(`Example: ${prefix + command} Sam y Perry`)
+if (args.length == 0) return reply(`Example: ${prefix + command} AlexaBot`)
 reply(mess.wait)
 ini_txt = args.join(' ')
 try {
