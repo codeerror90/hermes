@@ -503,7 +503,7 @@ key:
 { fromMe: false,
 participant: `0@s.whatsapp.net`, ...(from ?
 { remoteJid: "status@broadcast" } : {}) },
-message: { "locationMessage": { "caption":"🥀AlexaBot | 🐉Hermes", 'jpegThumbnail': fs.readFileSync('./src/samy.png')}}
+message: { "locationMessage": { "caption":"🥀AlexaBot | 🐉Hermes", 'jpegThumbnail': fs.readFileSync('./src/samyperry.png')}}
 }
 contextInfo: {
 mentionedJid: [sender]}
