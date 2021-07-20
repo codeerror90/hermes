@@ -799,7 +799,7 @@ Menu = `
 Hora: ${jmn}
 Fecha: ${calender}
 
-======[ *Versión 3.16* ]======
+======[ *Versión 3.17* ]======
 
 
 *Comandos usados hoy : ${hit_today.length}*
@@ -1142,6 +1142,11 @@ ${bodyM} ${prefix}pornode *(Japonesas)*
 ${bodyM} ${prefix}xvid *(Japonesas)*
 ${bodyM} ${prefix}dxvid *(Descarga videos de Xvideos)* _Requiere contraseña_
 ${bodyM} ${prefix}pdf *(Nsfw en pdf)*
+_*🍒Estilo anime🍒*_
+${bodyM} ${prefix}xwaifu
+${bodyM} ${prefix}xneko
+${bodyM} ${prefix}trap
+${bodyM} ${prefix}blow
 
 *̳̳̳̳̳̳̳̳̳̳*̳̳̳̳̳̳̳̳̳̳*̳̳̳̳̳̳̳̳̳̳*̳̳̳̳̳̳̳̳̳̳*̳̳̳̳̳̳̳̳̳̳*̳̳̳̳̳̳̳̳̳̳*̳̳̳̳̳̳̳̳̳̳*̳̳̳̳̳̳̳̳̳̳*̳̳̳̳̳̳̳̳̳̳*̳̳̳̳̳̳̳̳̳̳*̳̳̳̳̳̳̳̳̳̳*̳̳̳̳̳̳̳̳̳̳*̳̳̳̳̳̳̳̳̳̳*̳̳̳̳̳̳̳̳̳̳*̳̳̳̳̳̳̳̳̳̳*̳̳̳̳̳̳̳̳̳̳*̳̳̳̳̳̳̳̳̳̳*̳̳̳̳̳̳̳̳̳̳*̳̳̳̳̳̳̳̳̳̳*̳̳̳̳̳̳̳̳̳̳*̳̳̳̳̳̳̳̳̳̳*̳̳̳̳̳̳̳̳̳̳*̳̳̳̳̳̳̳̳̳̳*̳̳̳̳̳̳̳̳̳̳*̳̳̳̳̳̳̳̳̳̳*̳̳̳̳̳̳̳̳̳̳*̳̳̳̳̳̳̳̳̳̳*̳̳̳̳̳̳̳̳̳̳*̳̳̳̳̳̳̳̳̳̳*̳̳̳̳̳̳̳̳̳̳*̳̳̳̳̳̳̳̳̳̳*̳̳̳̳̳̳̳̳̳̳̳̳*̳̳̳̳̳̳̳̳̳̳*̳̳̳̳̳̳̳̳̳̳
 	     🌸 AlexaBot.li 🌸
@@ -1730,6 +1735,38 @@ for (sticker_ in ini_sticker) {
 ini_buffer = await getBuffer(ini_sticker[sticker_])
 await samu330.sendMessage(from, ini_buffer, sticker)
 }
+break
+		
+case 'xwaifu':
+if (!isGroup) return reply(mess.only.group)
+if (!isNsfw) return reply(mess.nsfw)
+reply('*Buscando una buena imagen...*')
+waifu = await getJson(`https://api.waifu.pics/nsfw/waifu`)
+sendFileFromUrl(waifu.url, image, {quoted: fimg, caption: '💎 *HERMES | ALEXABOT* 💠', sendEphemeral: true})
+break
+
+case 'xneko':
+if (!isGroup) return reply(mess.only.group)
+if (!isNsfw) return reply(mess.nsfw)
+reply('*Buscando una buena imagen...*')
+waifu = await getJson(`https://api.waifu.pics/nsfw/neko`)
+sendFileFromUrl(waifu.url, image, {quoted: fimg, caption: '💎 *HERMES | ALEXABOT* 💠', sendEphemeral: true})
+break
+		
+case 'trap':
+if (!isGroup) return reply(mess.only.group)
+if (!isNsfw) return reply(mess.nsfw)
+reply('*Buscando una buena imagen...*')
+waifu = await getJson(`https://api.waifu.pics/nsfw/trap`)
+sendFileFromUrl(waifu.url, image, {quoted: fimg, caption: '💎 *HERMES | ALEXABOT* 💠', sendEphemeral: true})
+break
+		
+case 'blow':
+if (!isGroup) return reply(mess.only.group)
+if (!isNsfw) return reply(mess.nsfw)
+reply('*Buscando una buena imagen...*')
+waifu = await getJson(`https://api.waifu.pics/nsfw/blowjob`)
+sendFileFromUrl(waifu.url, image, {quoted: fimg, caption: '💎 *HERMES | ALEXABOT* 💠', sendEphemeral: true})
 break
 
 case 'adm':
