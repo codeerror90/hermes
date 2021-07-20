@@ -4027,13 +4027,13 @@ break
 					if (args[0] === '1') {
 						if (isAntigp) return reply('Ya esta activo')
 						antigp.push(from)
-						fs.writeFileSync('./src/antilink.json', JSON.stringify(antigp))
+						fs.writeFileSync('./src/antigp.json', JSON.stringify(antigp))
 						reply('*Anti-link de grupos activado ✔️*')
 						samu330.sendMessage(from,`Los miembros que manden un link de otro grupo serán eliminados`, text)
 					} else if ((args[0]) === '0') {
 						var ini = antigp.indexOf(from)
 						antigp.splice(ini, 1)
-						fs.writeFileSync('./src/antilink.json', JSON.stringify(antigp))
+						fs.writeFileSync('./src/antigp.json', JSON.stringify(antigp))
 						reply('Anti-link de grupos desactivado ✔️')
 					} else {
 						reply('*1 para activar, 0 para desactivar*')
