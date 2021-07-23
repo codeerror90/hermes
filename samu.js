@@ -3629,8 +3629,44 @@ return samu330.sendMessage(from, 'Modo privado dice:v', MessageType.text)
 
 break
 
+case 'p1':
+const rows = [
+ {title: 'Row 1', description: "Hello it's description 1", rowId:"rowid1"},
+ {title: 'Row 2', description: "Hello it's description 2", rowId:"rowid2"}
+]
+
+const sections = [{title: "Section 1", rows: rows}]
+
+const button = {
+ buttonText: 'Click Me!',
+ description: "Hello it's list message",
+ sections: sections,
+ listType: 1
+}
+
+const sendMsg = await samu330.sendMessage(from, button, MessageType.listMessage)
+sendMsg
+break
+	
+case 'p3':
+const buttons = [
+  {buttonId: 'id1', buttonText: {displayText: 'Button 1'}, type: 1},
+  {buttonId: 'id2', buttonText: {displayText: 'Button 2'}, type: 1}
+]
+
+const buttonMessage = {
+    contentText: "Hi it's button message",
+    footerText: 'Hello World',
+    buttons: buttons,
+    headerType: 1
+}
+
+const sendMsg1 = await samu330.sendMessage(from, buttonMessage, MessageType.buttonsMessage)
+sendMsg1
+break
+		
 case 'public':
-if (!isOwner && !itsMe) return await reply('Este comando solo puede ser usado por *Hermes* ⚙')
+if (!isOwner && !itsMe) return await reply('Este comando solo puede ser usado por *Samu330* ⚙')
 if (public) return await reply('*El modo publico Ya esta activado*')
 config["public"] = true
 public = true
@@ -3669,20 +3705,21 @@ texxt = await msg.stats(totalChat1)
 await wa.sendFakeStatus(from, texxt, "BOT STATS")
 break
 case 'bloquear':
-if (!isOwner && !itsMe) return await reply('Este comando solo puede ser usado por *Hermes* ⚙')
-if (isGroup) {
-if (mentionUser.length == 0) return await reply("tag target!")
-return await wa.blockUser(sender, true)
-}
-await wa.blockUser(sender, true)
-break
+samu330.updatePresence(from, Presence.composing)
+if (!isGroup) return reply(mess.only.group)
+if (!isOwner && !itsMe) return reply(mess.only.ownerB)
+samu330.blockUser (`${body.slice(8)}@c.us`, "add")
+samu330.sendMessage(from, `Usuario bloqueado`, MessageType.text, {
+quoted: fliveLoc
+  })
+  break
 case 'desbloquear':
-if (!isOwner && !itsMe) return await reply('Este comando solo puede ser usado por *Hermes* ⚙')
+if (!isOwner && !itsMe) return await reply('Este comando solo puede ser usado por *Samu330* ⚙')
 if (isGroup) {
 if (mentionUser.length == 0) return await reply("Tag targer!")
-return await wa.blockUser(sender, false)
+mentioned = sam.message.extendedTextMessage.contextInfo.mentionedJid
+await samu330.blockUser (mentioned, "remove")
 }
-await wa.blockUser(sender, false)
 break
 case 'salir':
 if (!isOwner && !itsMe) return await reply('Este comando solo puede ser usado por *Hermes* ⚙')
