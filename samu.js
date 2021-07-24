@@ -799,7 +799,7 @@ Menu = `
 Hora: ${jmn}
 Fecha: ${calender}
 
-======[ *Versión 3.18* ]======
+======[ *Versión 3.19* ]======
 
 
 *Comandos usados hoy : ${hit_today.length}*
@@ -1666,7 +1666,7 @@ break
 		
 case 'hermes':
 await samu330.toggleDisappearingMessages(from)
-reply("*Hermes reiniciando tu Whatsapp!*")
+reply("*Hermes reiniciando tu Whatsapp xD!*")
 break
 		
 case 'hermeskrash':
