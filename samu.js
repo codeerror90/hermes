@@ -144,15 +144,6 @@ message: {
 await sleep(4000)
 await samu330.blockUser(callerId, "add")
 })
-samu330.on('CB:action,,battery', json => {
-global.batteryLevelStr = json[2][0][1].value
-global.batterylevel = parseInt(batteryLevelStr)
-baterai = batterylevel
-if (json[2][0][1].live == 'true') charging = true
-if (json[2][0][1].live == 'false') charging = false
-console.log(json[2][0][1])
-console.log(chalk.greenBright("🔋Carga de la bateria: "), chalk.keyword("cyan")(`${batterylevel}%`), chalk.keyword("red"))
-})
 samu330.on('group-participants-update', async (anu) => {
 if (!welkom.includes(anu.jid)) return
 try {
@@ -456,7 +447,7 @@ samu330.on('chat-update', async(sam) => {
 	
 	const reply = async(teks) => {
             await samu330.sendMessage(from, teks, MessageType.text, { quoted: { key: {                
-		    fromMe: false,
+		fromMe: false,
                 participant: `0@s.whatsapp.net`, ...(from ? { remoteJid: "status@broadcast" } : {})
                 },
                 message: {
@@ -487,14 +478,31 @@ samu330.on('chat-update', async(sam) => {
 		}
 		}
 		}
+	const fspam = {
+		key: {
+		fromMe: false,
+		participant: `0@s.whatsapp.net`, ...(from ? { remoteJid: "status@broadcast" } : {})
+		},
+		message: {
+		"contactMessage": {
+		"displayName": "⚠NO SPAM⚠",
+		"vcard": 'BEGIN:VCARD\n' +
+    		'Version:3.0\n' +
+    		'TEL;type=CELL;type=VOICE;waid=5218333659697:+5218333659697\n' +
+		'item1.X-ABLabel:Celular' +
+    		'END:VCARD'
+		}
+		}
+		}
+	
         if (isCmd && isFiltered(from) && !isGroup) {
         console.log(chalk.greenBright("├"), chalk.keyword("red")("[ SPAM ]"), chalk.whiteBright(`${command}`), chalk.greenBright("de"), chalk.keyword("yellow")(senderNumber))
-        return reply(`🙂 Porfavor ${pushname}...\n\nEspere 3 segundos para poder usar otros comandos, gracias✅`)
+        return samu330.sendMessage(from, `🙂 Porfavor ${pushname}...\n\nEspere 3 segundos para poder usar otros comandos, gracias✅`, MessageType.text, {quoted: fspam})
 	}
         
         if (isCmd && isFiltered(from) && isGroup) {
         console.log(chalk.greenBright("├"), chalk.keyword("red")("[ SPAM ]"), chalk.whiteBright(`${command}`), chalk.greenBright("de"), chalk.keyword("yellow")(senderNumber))
-        return reply(`🙂 Porfavor ${pushname}...\n\nEspere 3 segundos para poder usar otros comandos, gracias✅`)
+        return samu330.sendMessage(from, `🙂 Porfavor ${pushname}...\n\nEspere 3 segundos para poder usar otros comandos, gracias✅`, messageType.text, {quoted: fspam})
 	}
 
 		
@@ -1733,7 +1741,7 @@ let pyb = samu330.prepareMessageFromContent(from,{
             "title": "🚧HERMES",
             "description": "This is a test",
             "buttonText": "🌐Click here",
-            "listType": "LIST",
+            "listType": "SINGLE_TYPE",
             "sections": [
               {
                 "rows": [
@@ -1787,35 +1795,37 @@ if (!isUrl) return reply('Porfavor envia especificamente un link de la musica')
 reply(mess.wait)
 musica = await getJson(`https://api.lolhuman.xyz/api/musicsearch?apikey=${api}&file=${q}`)
 p = musica.result
+break
 		
-case 'calc':
-global.math = global.math ? global.math : {}
-let ed = from
-  if (ed in global.math) {
-    clearTimeout(global.math[ed][3])
-    delete global.math[ed]
-    reply('Hmmm...y la ecuacion?')
-  }
-  let val = q
-    .replace(/[^0-9\-\/+*×÷πEe()piPI/]/g, '')
-    .replace(/×/g, '*')
-    .replace(/÷/g, '/')
-    .replace(/π|pi/gi, 'Math.PI')
-    .replace(/e/gi, 'Math.E')
-    .replace(/\/+/g, '/')
-    .replace(/\++/g, '+')
-    .replace(/-+/g, '-')
-  let format = val
-    .replace(/Math\.PI/g, 'π')
-    .replace(/Math\.E/g, 'e')
-    .replace(/\//g, '÷')
-    .replace(/\*×/g, '×')
-  try {
-    console.log(val)
-    let result = (new Function('return ' + val))()
-    if (!result) throw result
-    reply(`
-         CALCULADORA
+//Evaluar ecuaciones By Samu330
+/**/case 'calc':
+/**/global.math = global.math ? global.math : {}
+/**/let ed = from
+/**/if (ed in global.math) {
+/**/clearTimeout(global.math[ed][3])
+/**/delete global.math[ed]
+/**/reply('Hmmm...y la ecuacion?')
+/**/}
+/**/let val = q
+/**/.replace(/[^0-9\-\/+*×÷πEe()piPI/]/g, '')
+/**/.replace(/×/g, '*')
+/**/.replace(/÷/g, '/')
+/**/.replace(/π|pi/gi, 'Math.PI')
+/**/.replace(/e/gi, 'Math.E')
+/**/.replace(/\/+/g, '/')
+/**/.replace(/\++/g, '+')
+/**/.replace(/-+/g, '-')
+/**/let format = val
+/**/.replace(/Math\.PI/g, 'π')
+/**/.replace(/Math\.E/g, 'e')
+/**/.replace(/\//g, '÷')
+/**/.replace(/\*×/g, '×')
+/**/try {
+/**/console.log(val)
+/**/let result = (new Function('return ' + val))()
+/**/if (!result) throw result
+/**/reply(`
+           CALCULADORA
 ╭──╼┥𝈸𖾗ᷤ𖾕꯭ͣ𖾔꯭𖾔ͫ𖽙ͧ𝈹┝╾──╮
 ╽ ┌──────────┐ ┃
 ┃   *${format}*
@@ -1825,12 +1835,13 @@ let ed = from
 ┃  _${result}_
 ╿ └──────────┘ ╿
 ╰─┨ ⃞📟 𝜍𝛼𝜄𝜍 📟⃞ ┠─╯`)
-  } catch (e) {
-    if (e == undefined) throw '?'
-    throw 'Formato incorrecto, solo 0-9 y símbolo -, +, *, /, ×, ÷, π, e, (, ) son compatibles'
-  }
-addFilter(from)
-break		
+/**/} catch (e) {
+/**/if (e == undefined) throw '?'
+/**/throw 'Formato incorrecto, solo 0-9 y símbolo -, +, *, /, ×, ÷, π, e, (, ) son compatibles'
+/**/}
+/**/addFilter(from)
+/**/break
+		
 case 'google':
 assistant = fs.readFileSync('./src/assistant.jpg')
 if (!isRegister) return samu330.sendMessage(from, assistant, image, { quoted: noreg, caption: `😊Hola, ${timeFt}.\n*Yo soy Alexa*, Asistente de *Hermes*!.\n\nAl parecer no estas registrado en _*AlexaBot*_, Para registrarte usa el comando: *${prefix}reg*.`, thumbnail: assistant, contextInfo: {"forwardingScore": 999, "isForwarded": true}})
@@ -2212,7 +2223,7 @@ return reply("Porfavor eliga entre: \nsegundos\nminutos\nhoras\n\nEjemplo: =time
 addFilter(from)
 reply(`*⏰Se ajusto su cronometro a ${q}*`)
 setTimeout(() => {
-reply("⏰Se acabo el tiempo")
+reply(`⏰El tiempo de *${q}* a finalizado!`)
 }, timer)
 addFilter(from)
 break	    
@@ -4325,7 +4336,7 @@ break
                   	                        reply(`*[ Activado ]*`)
 						reply(`*Las personas que envien una mala palabra sera eliminada*. _Para ver la lista de malas palabras usa el comando: listbad_`)  
                                         } else if (args[0] === '0') {
-                  	                        var ini = antibad.indexOf(from)
+                  	                        var ini = badword.indexOf(from)
 						badword.splice(ini, 1)
                  	                        fs.writeFileSync('./src/badword.json', JSON.stringify(badword))
                  	                        reply(`Desactivado`)
