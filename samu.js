@@ -32,6 +32,7 @@ const crypto = require("crypto-js");
 const CryptoJS = require("crypto-js");
 const request = require('request');
 const fs = require('fs');
+const { addBanned, unBanned, BannedExpired, cekBannedUser } = require('./lib/banned.js')
 const { wait, h2k, generateMessageID, getGroupAdmins, banner, start, info, success, close } = require('./lib/functions')
 const { removeBackgroundFromImageFile } = require('remove.bg');
 const { exec } = require('child_process');
@@ -46,6 +47,7 @@ const { ssstik } = require("./lib/tiktok.js")
 const {fbDown} = require('./lib/fb.js')
 const { isFiltered, addFilter } = require('./lib/antispam')
 const chatban = JSON.parse(fs.readFileSync('./src/ban.json'))
+const ban = JSON.parse(fs.readFileSync('./src/banned.json'))
 const zalgo = require('./lib/zalgo')
 const {convertSticker} = require("./lib/swm.js")
 const conn = require("./lib/connect")
@@ -301,6 +303,7 @@ samu330.on('chat-update', async(sam) => {
 
         const command = comm
         hit_today.push(command)
+	const content = JSON.stringify(sam.message)    
 	const chats1 = (type === 'chat') ? body : ((type === 'image' || type === 'video')) ? caption : ''
 	const samu = '```'
 	const crypto = require('crypto')
@@ -334,6 +337,7 @@ samu330.on('chat-update', async(sam) => {
         const isOwner = senderNumber == owner || senderNumber == botNumber || mods.includes(senderNumber)
 	const isBanChat = chatban.includes(from)
 	if (isBanChat && !isOwner) return
+	const isBan = cekBannedUser(sender, ban)
 	const q = args.join(' ')
 	var pes = (type === 'conversation' && sam.message.conversation) ? sam.message.conversation : (type == 'imageMessage') && sam.message.imageMessage.caption ? sam.message.imageMessage.caption : (type == 'videoMessage') && sam.message.videoMessage.caption ? sam.message.videoMessage.caption : (type == 'extendedTextMessage') && sam.message.extendedTextMessage.text ? sam.message.extendedTextMessage.text : ''
 	const messagesC = pes.slice(0).trim().split(/ +/).shift().toLowerCase()
@@ -421,6 +425,7 @@ samu330.on('chat-update', async(sam) => {
 	else if (isTexto) typeMessage = "text"
 
         const isQuoted = type == 'extendedTextMessage'
+	const isQuotedMsg = type === 'extendedTextMessage' && content.includes('textMessage')
         const isQuotedImage = isQuoted && typeQuoted == 'imageMessage'
         const isQuotedVideo = isQuoted && typeQuoted == 'videoMessage'
         const isQuotedAudio = isQuoted && typeQuoted == 'audioMessage'
@@ -523,17 +528,6 @@ samu330.on('chat-update', async(sam) => {
 		}
 		}
 		}
-	
-        if (isCmd && isFiltered(from) && !isGroup) {
-        console.log(chalk.greenBright("├"), chalk.keyword("red")("[ SPAM ]"), chalk.whiteBright(`${command}`), chalk.greenBright("de"), chalk.keyword("yellow")(senderNumber))
-        return samu330.sendMessage(from, `🙂 Porfavor ${pushname}...\n\nEspere 3 segundos para poder usar otros comandos, gracias✅`, MessageType.text, {quoted: fspam})
-	}
-        
-        if (isCmd && isFiltered(from) && isGroup) {
-        console.log(chalk.greenBright("├"), chalk.keyword("red")("[ SPAM ]"), chalk.whiteBright(`${command}`), chalk.greenBright("de"), chalk.keyword("yellow")(senderNumber))
-        return samu330.sendMessage(from, `🙂 Porfavor ${pushname}...\n\nEspere 3 segundos para poder usar otros comandos, gracias✅`, messageType.text, {quoted: fspam})
-	}
-
 		
 
 const fimg = {
@@ -619,7 +613,22 @@ mentionedJid: [sender]}
 	        if (!isGroup && isCmd) console.log(chalk.greenBright("├"), chalk.keyword("aqua")("[ COMMANDO ]"), chalk.whiteBright(typeMessage), chalk.greenBright("de"), chalk.keyword("yellow")(pushname))
         	if (isGroup && isCmd) console.log(chalk.greenBright("├"), chalk.keyword("aqua")("[ COMMANDO ]"), chalk.whiteBright(typeMessage), chalk.greenBright("de"), chalk.keyword("yellow")(pushname), chalk.greenBright("en el grupo"), chalk.keyword("yellow")(groupName)) 
 	    
-		if (messagesC.includes("bot")){
+	        if (isBan && isCmd && !isOwner) {
+		reply('*Lo siento pero usted es un usuario baneado, no puede hacer uso del bot!*')
+        	return console.log(chalk.greenBright("├"), chalk.keyword("magenta")("[ USUARIO BANEADO ]"), chalk.whiteBright(`${command}`), chalk.greenBright("de"), chalk.keyword("yellow")(pushname))
+        	}
+	
+		if (isCmd && isFiltered(from) && !isGroup) {
+        	console.log(chalk.greenBright("├"), chalk.keyword("red")("[ SPAM ]"), chalk.whiteBright(`${command}`), chalk.greenBright("de"), chalk.keyword("yellow")(senderNumber))
+        	return samu330.sendMessage(from, `🙂 Porfavor ${pushname}...\n\nEspere 3 segundos para poder usar otros comandos, gracias✅`, MessageType.text, {quoted: fspam})
+		}
+        
+        	if (isCmd && isFiltered(from) && isGroup) {
+        	console.log(chalk.greenBright("├"), chalk.keyword("red")("[ SPAM ]"), chalk.whiteBright(`${command}`), chalk.greenBright("de"), chalk.keyword("yellow")(senderNumber))
+        	return samu330.sendMessage(from, `🙂 Porfavor ${pushname}...\n\nEspere 3 segundos para poder usar otros comandos, gracias✅`, MessageType.text, {quoted: fspam})
+		}
+		
+	        if (messagesC.includes("bot")){
 			samu330.updatePresence(from, Presence.composing)
 			rm = [
 			result = fs.readFileSync(`./temp/Samu.webp`),
@@ -1387,6 +1396,14 @@ _${prefix}apagar_
 *${prefix}Restaurar*
 
 ╭─────────────
+│ *${prefix}ban*
+│ _Prohibe el uso del bot a una persona_
+╰─────────────╮
+╭─────────────╯
+│ *${prefix}unban*
+│ _Permite el uso del bot a una persona baneada_
+╰─────────────╮
+╭─────────────╯
 │ *${prefix}banchat*
 │ _Bloquea el uso del bot en los chats que se active_
 ╰─────────────╮
@@ -4349,7 +4366,42 @@ reply('*♻Este chat a dejado de ser baneado*')
 } else {
 reply(`Porfavor escriba bien el comando: ${prefix}banchat *0/1*`)
 }
+break
+case 'ban':
+if (!itsMe) return reply(mess.only.owner)
+mentioned = sam.message.extendedTextMessage.contextInfo.mentionedJid
+if (mentioned.length !== 0){
+for (let i = 0; i < mentioned.length; i++){
+addBanned(mentioned[0], args[1], ban)
+}
+mentions(`@${mentioned[0].split('@')[0]} Usted a sido baneado, lo que significa que no podra usar el bot!`, mentioned, true)
+} else if (isQuotedMsg) {
+if (quotedMsg.sender.match('529984907794')) return reply(`🤨`)
+addBanned(quotedMsg.sender, args[1], ban)
+mentions(`@${mentioned[0].split('@')[0]} Usted a sido baneado, lo que significa que no podra usar el bot!`, mentioned, true)
+} else if (!isNaN(args[1])) {
+addBanned(args[1] + '@s.whatsapp.net', args[2], ban)
+mentions(`@${mentioned[0].split('@')[0]} Usted a sido baneado, lo que significa que no podra usar el bot!`, mentioned, true)
+}
+break
+                
+case 'unban':
+if (!itsMe) return reply(mess.only.owner)
+mentioned = sam.message.extendedTextMessage.contextInfo.mentionedJid
+if (mentioned.length !== 0){
+for (let i = 0; i < mentioned.length; i++){
+unBanned(mentioned[i], ban)
+}
+mentions(`@${mentioned[0].split('@')[0]} Usted a sido desbaneado, ahora podra usar el bot!!`, mentioned, true)
+}if (isQuotedMsg) {
+unBanned(quotedMsg.sender, ban)
+mentions(`@${mentioned[0].split('@')[0]} Usted a sido desbaneado, ahora podra usar el bot!!`, mentioned, true)
+} else if (!isNaN(args[0])) {
+unBanned(args[0] + '@s.whatsapp.net', ban)
+mentions(`@${mentioned[0].split('@')[0]} Usted a sido desbaneado, ahora podra usar el bot!!`, mentioned, true)
+}
 break		
+		
 case '+18':                
 if (!isGroup) return reply(mess.only.group)
 if (!isAdmin) return reply(mess.only.admin)     
@@ -4369,6 +4421,8 @@ if (args[0] === '1') {
 	reply('1 para activar, 0 para desactivar')           
 }           
 break
+		
+		
 //by Sm330
 case 'autostick':            
 if (!isGroup) return reply(mess.only.group)
