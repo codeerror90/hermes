@@ -95,6 +95,7 @@ fak = 'samu3300'
 prefix = '.'
 apikey = 'LindowApi'
 hit_today = []
+blocked = []
 const _registered = JSON.parse(fs.readFileSync('./src/registered.json'))
 
 ///////////////////////////////////////////////////////////////////////////
