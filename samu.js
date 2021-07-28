@@ -4600,10 +4600,12 @@ const emror = String(e)
 if (emror.includes('convert')){ 
 return
 }
+if (emror.includes('this.isZero')){ 
+return
+}	
 if (emror.includes('fileLength')){                           
 return
 }
 console.log(chalk.greenBright("├"), chalk.keyword("yellow")("[  ERROR  ]"), chalk.keyword("red")(e))
 }
 })
-
