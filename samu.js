@@ -833,7 +833,7 @@ mentionedJid: [sender]}
 				reply(`*LOCALIZACION DETECTADA, EN ESTE GRUPO NO SE PERMITEN LAS LOCALIZACIONES, YA QUE ESTAN ACTIVADOS LOS COMANDOS ANTILEGIONES, POR SEGURIDAD TE ELIMINARE*\n\n🛃 ESTE GRUPO ESTA PROTEGIDO POR:\n 🥀AlexaBσt de 🐉Hermes`)                   
 				samu330.groupSettingChange(from, GroupSettingChange.messageSend, true).then(() => {
                 samu330.groupRemove(from, [sender])
-                samu330.sendMessage(from, '*Esperemos 10 segundos🙄\n\n🔰Destrabando\n\n\n\n\n\n\n\n\n\n\n\n🔰Destrabando\n\n\n\n\n\n\n\n\n\n\n\n🔰Destrabando\n\n\n\n\n\n\n\n\n\n\n\n🔰Destrabando\n\n\n\n\n\n\n\n\n\n\n\n🔰Destrabando\n\n\n\n\n\n\n\n\n\n\n\n🔰Destrabando\n\n\n\n\n\n\n\n\n\n\n\n🔰Destrabando', MessageType.text)
+                samu330.sendMessage(from, '*Esperemos 12 segundos🙄\n\n🔰Destrabando\n\n\n\n\n\n\n\n\n\n\n\n🔰Destrabando\n\n\n\n\n\n\n\n\n\n\n\n🔰Destrabando\n\n\n\n\n\n\n\n\n\n\n\n🔰Destrabando\n\n\n\n\n\n\n\n\n\n\n\n🔰Destrabando\n\n\n\n\n\n\n\n\n\n\n\n🔰Destrabando\n\n\n\n\n\n\n\n\n\n\n\n🔰Destrabando', MessageType.text)
 				})
 				await sleep(10000)
 				samu330.groupSettingChange(from, GroupSettingChange.messageSend, false)
