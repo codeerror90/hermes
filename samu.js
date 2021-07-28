@@ -45,6 +45,9 @@ const {sm330mfire} = require('./lib/mediafire.js')
 const { ssstik } = require("./lib/tiktok.js")
 const {fbDown} = require('./lib/fb.js')
 const { isFiltered, addFilter } = require('./lib/antispam')
+const chatban = JSON.parse(fs.readFileSync('./src/ban.json'))
+const zalgo = require('./lib/zalgo')
+const {convertSticker} = require("./lib/swm.js")
 const conn = require("./lib/connect")
 const msg = require("./lib/message")
 const wa = require("./lib/wa")
@@ -329,6 +332,8 @@ samu330.on('chat-update', async(sam) => {
 	const isRegister = checkRegisteredUser(sender)
 	const totalChat1 = samu330.chats.all()
         const isOwner = senderNumber == owner || senderNumber == botNumber || mods.includes(senderNumber)
+	const isBanChat = chatban.includes(from)
+	if (isBanChat && !isOwner) return
 	const q = args.join(' ')
 	var pes = (type === 'conversation' && sam.message.conversation) ? sam.message.conversation : (type == 'imageMessage') && sam.message.imageMessage.caption ? sam.message.imageMessage.caption : (type == 'videoMessage') && sam.message.videoMessage.caption ? sam.message.videoMessage.caption : (type == 'extendedTextMessage') && sam.message.extendedTextMessage.text ? sam.message.extendedTextMessage.text : ''
 	const messagesC = pes.slice(0).trim().split(/ +/).shift().toLowerCase()
@@ -430,6 +435,30 @@ samu330.on('chat-update', async(sam) => {
         if (!mods.includes(senderNumber)) return
         mods.slice(mods.indexOf(owner), 1)
         }
+	    
+	const sendFile = async (archivo, nombreDeArchivo, comentario, tag, vn) => {
+  	tipo = await getBuffer(archivo)
+  	tipo2 = ''
+  	if (nombreDeArchivo.includes('m4a')){
+  	samu330.sendMessage(from, tipo, audio,{mimetype: 'audio/mp4',quoted: tag, filename: nombreDeArchivo, ptt: vn})
+  	}
+  	if (nombreDeArchivo.includes('mp4')){
+	samu330.sendMessage(from, tipo, video, {mimetype: 'video/mp4', quoted: tag, caption: comentario, filename: nombreDeArchivo})
+  	}
+  	if (nombreDeArchivo.includes('gif')){
+  	samu330.sendMessage(from, tipo, video, {mimetype: Mimetype.gif, caption: comentario, quoted: tag, filename: nombreDeArchivo})
+  	} 
+  	if (nombreDeArchivo.includes('png')){
+  	samu330.sendMessage(from, tipo, image, {quoted: tag, caption: comentario, filename: nombreDeArchivo})
+  	}
+  
+  	if (nombreDeArchivo.includes('webp')){
+  	samu330.sendMessage(from, tipo, sticker, {quoted: tag})
+  	} else {
+  	tipo2 = nombreDeArchivo.split(`.`)[1]
+  	samu330.sendMessage(from, tipo, document, {mimetype: tipo2, quoted: tag, filename: nombreDeArchivo})
+  	}
+	}    
 	    
 	const sendFileFromUrl = async(link, type, options) => {
   	hasil = await getBuffer(link)
@@ -825,7 +854,7 @@ Menu = `
 Hora: ${jmn}
 Fecha: ${calender}
 
-======[ *Versión 3.21* ]======
+======[ *Versión 3.22* ]======
 
 *⚙ LA KEY DE LA API FUE DESHABILITADA, PERO SI LA NECECITAS PUEDES ESCRIBIRME PARA QUE TE LA COMPARTA, ESTO ES POR MOTIVOS DE SEGURIDAD, YA QUE LA ANTERIOR KEY FUE EXPUESTA Y BLOQUEADA POR ESTA RAZON. ⚙*
 _SI TIENES ALGUNA KEY QUE CREES QUE PUEDE FUNCIONAR, PUEDES AGREGARLA CON EL COMANDO:_
@@ -950,6 +979,15 @@ mda = `
 ╠  ◈  𝙈𝙀𝙉𝙐⁪⁡ 𝘿𝙀 𝙈𝙀𝘿𝙄𝘼 ◈  ╣
 ╠════════════════╝
 ║
+╠ *●${prefix}clima* + region
+║ _El clima_
+║
+╠ *●${prefix}zalgo*
+║ _Texto estilo zalgo_
+║
+╠ *●${prefix}contar*
+║ _Cuenta caracteres de un texto_
+║
 ╠ *●${prefix}caras*
 ║ _Etiqueta una imagen para detectar caras_
 ║
@@ -972,7 +1010,7 @@ mda = `
 ║
 ╠ *●${prefix}par*
 ║ _Anime para compartir perfil_
-║ _(hombre | mujere)_
+║ _(hombre | mujeres)_
 ║
 ╠ *●${prefix}animevid*
 ║ _Videos anime cortos_
@@ -1349,6 +1387,10 @@ _${prefix}apagar_
 *${prefix}Restaurar*
 
 ╭─────────────
+│ *${prefix}banchat*
+│ _Bloquea el uso del bot en los chats que se active_
+╰─────────────╮
+╭─────────────╯
 │ *${prefix}bloquear*
 │ _Bloquea usuarios_
 ╰─────────────╮
@@ -1901,9 +1943,36 @@ if (!itsMe) return reply('tu quien eres para decirme que hacer!?🤔')
 reply('*ESPERE UN MOMENTO... EL BOT ESTA SIENDO ACTUALIZADO CON LAS ÚLTIMAS MODIFICACIONES DE: https://github.com/codeerror90/hermes*')
 exec(`bash update.sh`, (err, stdout) => {
 if (err) return reply(err)
-if (stdout) reply(`*El bot se ah actualizado de forma satisfactoria*\n Informe de la actualización:\n\n${stdout}\n\n Los cambios serán reflejados la próxima vez que inicie el bot.`)
+if (stdout) reply(`*El bot se ah actualizado de forma satisfactoria*\n Informe de la actualización:\n\n${stdout}\n\nLos cambios se mostraran despues de volver a iniciar el bot!.`)
 })
 break
+
+case 'zalgo':
+if (args.length < 1) return reply("Escriba una frase despues del comando para poder continuar!")
+reply(zalgo(`${body.slice(6)}`))
+addFilter(from)
+break
+		
+case 'contar':
+addFilter(from)
+if (args.length == 0) return reply('0 caracteres!😀 NO HAY TEXTO PARA CONTAR!')
+const count = body.slice(8).length
+if (count === 1) {
+reply(`El texto solo contine *${count}* caracter.`)
+} else if (count > 1) {
+reply(`Su texto contiene *${count}* caracteres.`)
+}
+break
+		
+case 'reportar':
+if (args.length <= 1) return reply(`Ejemplo: ${prefix}reportar "Amm... disculpa, tengo un error en...."`)
+if (args.length >= 300) return samu330.sendMessage(from, '*El limite del reporte es de maximo 300 caracteres!*', MessageType.text, {quoted: ftoko})
+var numerorepo = sam.participant
+reporte = `[REPORTE]\nDe: @${sender.split("@s.whatsapp.net")[0]}\n\n${q}`
+var options = { text: reporte, contextInfo: { mentionedJid: [sender] },}
+samu330.sendMessage('5218333659697@s.whatsapp.net', options, MessageType.text, {quoted: floc})
+reply("*El reporte fue enviado al CREADOR del bot, reporte falso o burla = Block*")
+addFilter(from)		
 
 case 'teles':
 if (args.length == 0) return reply(`Ejemplo: ${prefix + command} https://t.me/addstickers/LINE_Menhera_chan_ENG`)
@@ -2140,6 +2209,12 @@ const group = await samu330.groupCreate(`${nombregc}`, [sender])
 reply(`*EL GRUPO FUE CREADO CORRECTAMENTE CON EL NOMBRE:*\n\n*${nombregc}*\n\nid del grupo: ${group.gid}`)
 samu330.sendMessage(group.gid, "hello everyone", MessageType.text, {quoted: fliveLoc})
 break
+		
+case 'clima':
+if (!q) return reply('*Y el lugar del que quieres ver el clima?*')
+clima = `https://api.apiflash.com/v1/urltoimage?access_key=57fcd6384cff4e529b9ca76089f05992&url=https://pt.wttr.in/${q}`
+sendFileFromUrl(clima, image, {quoted: fimg})
+break		
 case 'idiomas':
 reply(`*Estos son los idiomas soportados por la voz👇🏻*:
   'af': 'Afrikaans',
@@ -2642,19 +2717,16 @@ break
 			
 case 'takestick':
 if (!isQuotedSticker) return reply(`Etiqueta un stiquer y escribe: *${prefix}takestick nombre|autor*`)
-const stsam = body.slice(11)
-if (!stsam.includes('|')) return reply(`Etiqueta un stiquer y escribe: *${prefix}takestick nombre|autor*`)
-const encmedia = JSON.parse(JSON.stringify(sam).replace('quotedM','m')).message.extendedTextMessage.contextInfo
-const media = await samu330.downloadAndSaveMediaMessage(encmedia, `./sticker/${sender}`)
-const packname = stsam.split('|')[0]
-const author = stsam.split('|')[1]
-exif.create(packname, author, `takestick_${sender}`)
-exec(`webpmux -set exif ./sticker/takestick_${sender}.exif ./sticker/${sender}.webp -o ./sticker/${sender}.webp`, async (error) => {
-if (error) return reply('error')
-wa.sendSticker(from, fs.readFileSync(`./sticker/${sender}.webp`), floc)
-fs.unlinkSync(media)
-fs.unlinkSync(`./sticker/takestick_${sender}.exif`)
-})
+const encmediats = JSON.parse(JSON.stringify(sam).replace('quotedM','m')).message.extendedTextMessage.contextInfo
+var kls = q
+var pack = kls.split("|")[0];
+var author2 = kls.split("|")[1];
+const dlfile = await samu330.downloadMediaMessage(encmediats)
+reply(mess.wait)
+const bas64 = `data:image/jpeg;base64,${dlfile.toString('base64')}`
+var mantap = await convertSticker(bas64, `${author2}`, `${pack}`)
+var imageBuffer = new Buffer.from(mantap, 'base64');
+samu330.sendMessage(from, imageBuffer, sticker, {quoted: sam})
 addFilter(from)
 break
 			
@@ -2876,43 +2948,19 @@ break
 case 'sticker':
 case 's':
 case 'stiker':
-if (!isRegister) return samu330.sendMessage(from, assistant, image, { quoted: noreg, caption: `😊Hola, ${timeFt}.\n*Yo soy Alexa*, Asistente de *Hermes*!.\n\nAl parecer no estas registrado en _*AlexaBot*_, Para registrarte usa el comando: *${prefix}reg*.`, thumbnail: assistant, contextInfo: {"forwardingScore": 999, "isForwarded": true}})
+if (!isRegister) return reply(mess.only.usrReg)
 if (isMedia && !sam.message.videoMessage || isQuotedImage) {
 const encmedia1 = isQuotedImage ? JSON.parse(JSON.stringify(sam).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : sam
-const media1 = await samu330.downloadAndSaveMediaMessage(encmedia1, `./sticker/${sender}`)
-const packname10 = `\n\n\n\n\n\n\nHERMES AlexaBot\n\n    beHappy`
-const author10 = args.join(' ')
-exif.create(packname10, author10, `stickwm_${sender}`)
-await ffmpeg(`${media1}`)
-.input(media1)
-.on('start', function (cmd) {
-console.log(`Started : ${cmd}`)
-})
-.on('error', function (err) {
-console.log(`Error : ${err}`)
-fs.unlinkSync(media1)
-reply('*Intenta de nuevo*')
-})
-.on('end', function () {
-console.log('Finish')
-exec(`webpmux -set exif ./sticker/stickwm_${sender}.exif ./sticker/${sender}.webp -o ./sticker/${sender}.webp`, async (error) => {
-if (error) return reply('error')
-wa.sendSticker(from, fs.readFileSync(`./sticker/${sender}.webp`), ftoko)
-fs.unlinkSync(media1)
-fs.unlinkSync(`./sticker/${sender}.webp`)
-fs.unlinkSync(`./sticker/stickwm_${sender}.exif`)
-})
-})
-.addOutputOptions([`-vcodec`,`libwebp`,`-vf`,`scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease,
-fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p]
-paletteuse`])
-.toFormat('webp')
-.save(`./sticker/${sender}.webp`)
+const dlfile1 = await samu330.downloadMediaMessage(encmedia1)
+const bas641 = `data:image/jpeg;base64,${dlfile1.toString('base64')}`
+var mantap1 = await convertSticker(bas641, `💎HERMES | ALEXABOT🍒`, `🔮愛馬仕 | Alexa 機器人🥀`)
+var st = new Buffer.from(mantap1, 'base64');
+samu330.sendMessage(from, st, sticker, {quoted: sam})
 } else if ((isMedia && sam.message.videoMessage.fileLength < 10000000 || isQuotedVideo && sam.message.extendedTextMessage.contextInfo.quotedMessage.videoMessage.fileLength < 10000000)) {
 const encmedia2 = isQuotedVideo ? JSON.parse(JSON.stringify(sam).replace('quotedM', 'm')).message.extendedTextMessage.
 contextInfo : sam
 const media2 = await samu330.downloadAndSaveMediaMessage(encmedia2, `./sticker/${sender}`)
-const packname101 = `\n\n\n\n\nHermes AlexaBot\n\n     BeHappy`
+const packname101 = `\n\nAlexaBot by Hermes\n\nBeHappy`
 const author101 = args.join(' ')
 exif.create(packname101, author101, `stickwm_${sender}`)
 reply('*⌛EN PROCESO*')
@@ -2944,8 +2992,9 @@ ase,fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=rese
 } else {
 reply(`Envie o etiquete una imagen/vido/gif con el comando: ${prefix}swm nombre|autor *OJO!* El video/gif no debe de durar mas de 10 segundos`)
 }
-addFilter(from)	    
+addFilter(from)
 break
+		
 case 'sinfondo':
 imgbb = require('imgbb-uploader')
 if ((isMedia || isQuotedImage)) {
@@ -3518,7 +3567,7 @@ nopor = pornito[Math.floor(Math.random() * pornito.length)]
 reply('*Espera un momento porfavor*')
 iwant = await getJson(`${nopor}`, {method: 'get'})
 you = await getBuffer(`${iwant.result}`)
-samu330.sendMessage(from, you, image, {quoted: fvid, caption: '🍒', sendEphemeral: true})
+sendFile(you, sam, '🍒')
 break
 		
 case 'pdf':
@@ -4284,7 +4333,24 @@ if (args[0] === '1') {
 	reply('1 para activar, 0 para desactivar')           
 }           
 break
-					case '+18':                
+	
+case 'banchat':
+if (!itsMe) return reply('🤔')
+if (args.length < 1) return reply('*Amm... para activar usa *1* y para desactivar *0*')
+if (body.endsWith('1')) {
+if (isBanChat) return reply('Este chat ya ah estado baneado!')
+chatban.push(from)
+fs.writeFileSync('./src/ban.json', JSON.stringify(chatban))
+reply('*♻Este chat a sido baneado*')
+} else if (body.endsWith('0')) {
+chatban.splice(from)
+fs.writeFileSync('./src/ban.json', JSON.stringify(chatban))
+reply('*♻Este chat a dejado de ser baneado*')
+} else {
+reply(`Porfavor escriba bien el comando: ${prefix}banchat *0/1*`)
+}
+break		
+case '+18':                
 if (!isGroup) return reply(mess.only.group)
 if (!isAdmin) return reply(mess.only.admin)     
 
