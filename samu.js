@@ -149,6 +149,17 @@ message: {
 await sleep(4000)
 await samu330.blockUser(callerId, "add")
 })
+
+samu330.on('CB:action,,battery', json => {
+global.batteryLevelStr = json[2][0][1].value
+global.batterylevel = parseInt(batteryLevelStr)
+baterai = batterylevel
+if (json[2][0][1].live == 'true') charging = true
+if (json[2][0][1].live == 'false') charging = false
+exec(`toilet -f pagga "NyanBot | Samu330" --filter border | lolcat`)
+console.log(chalk.greenBright("├"), chalk.keyword("magneta")("[ 🔋Nivel de carga de la vateria: ]"), chalk.greenBright(batterylevel+'%'), chalk.keyword("cyan")("Esta cargando?"), chalk.keyword("yellow")(charging))	
+})
+
 samu330.on('group-participants-update', async (anu) => {
 if (!welkom.includes(anu.jid)) return
 try {
