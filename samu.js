@@ -938,10 +938,21 @@ switch (command) {
 case 'help':
 case 'menu':
 case 'comandos':
-		
+const moment = require('moment-timezone')
+
+const jmn = moment.tz('America/Mexico_City').format('HH:mm:ss')
 redes = ['*Sigeme y te sigo en instagram!* https://www.instagram.com', '*😊Seamos amigos en facebook!!* https://www.facebook.com']
 opcion = redes[Math.floor(Math.random() * redes.length)]
-
+let d = new Date
+let locale = 'es'
+let gmt = new Date(0).getTime() - new Date('1 Januari 2021').getTime()
+let weton = ['domingo','lunes','Martes','Miercoles','Jueves','Viernes','Sabado'][Math.floor(((d * 1) + gmt) / 84600000) % 7]
+let week = d.toLocaleDateString(locale, { weekday: 'long' })
+let calender = d.toLocaleDateString(locale, {
+day: 'numeric',
+month: 'long',
+year: 'numeric'
+})
 var num = sam.participant
 foto = fs.readFileSync('./src/help.jpg')
 fakee = fs.readFileSync('./src/fake.jpg')
