@@ -532,64 +532,64 @@ samu330.on('chat-update', async(sam) => {
 	})
 	}
 	
-	const nivelActual = getLevelingLevel(sender)
-            var rango = '*🥉Bronce*'
-            if (nivelActual === 10) {
-                rango = '*🥈Plata*'
-            } else if (nivelActual === 20) {
-                rango = '*🥇Oro*'
-            } else if (nivelActual === 30) {
+//	const nivelActual = getLevelingLevel(sender)
+//            var rango = '*🥉Bronce*'
+//            if (nivelActual === 10) {
+//                rango = '*🥈Plata*'
+  //          } else if (nivelActual === 20) {
+    //            rango = '*🥇Oro*'
+      //      } else if (nivelActual === 30) {
                 rango = '💎Diamante'
-	    } else if (nivelActual === 30) {
-                rango = '*🌬Diamante Rosa*'
-            } else if (nivelActual >= 100) {
-                rango = '*🔥Diamante rojo🔥*'
-            }
+//	    } else if (nivelActual === 30) {
+ //               rango = '*🌬Diamante Rosa*'
+////            } else if (nivelActual >= 100) {
+//                rango = '*🔥Diamante rojo🔥*'
+//            }
 
 	
-	if (isOwner) {
-	var tipoDeUsr = '*🔮Ownwer*'
-	} else if (sender == isAdmin) {
-	var tipoDeUsr = '*👑Admin*'
-	 } else {
-	var tipoDeUsr = '*✍🏻Usuario*'
-	}
+//	if (isOwner) {
+//	var tipoDeUsr = '*🔮Ownwer*'
+//	} else if (sender == isAdmin) {
+//	var tipoDeUsr = '*👑Admin*'
+//	 } else {
+//	var tipoDeUsr = '*✍🏻Usuario*'
+//	}
 	
-	if (!sam.key.fromMe) {
-        if (!isBan) {
-	const currentLevel = getLevelingLevel(sender)
-	const checkId = getLevelingId(sender)
-	try {
-	if (currentLevel === undefined && checkId === undefined) addLevelingId(sender)
-	const amountXp = Math.floor(Math.random() * (15 - 25 + 1) + 15) //Math.floor(Math.random() * 10) + 500
-	const requiredXp = 5 * Math.pow(currentLevel, (5 / 2)) + 50 * currentLevel + 100 //5000 * (Math.pow(2, currentLevel) - 1)
-	const getLevel = getLevelingLevel(sender)
-	const namelv = checkId
-	addLevelingXp(sender, amountXp)
-	if (requiredXp <= getLevelingXp(sender)) {
-	addLevelingLevel(sender, 1)
-	const lvup =  `✴ _*🧗🏻‍♂️S͟u͟b͟e͟s͟ ͟d͟e͟ ͟n͟i͟v͟e͟l͟!͟*_ ✴
+//	if (!sam.key.fromMe) {
+//        if (!isBan) {
+//	const currentLevel = getLevelingLevel(sender)
+//	const checkId = getLevelingId(sender)
+//	try {
+//	if (currentLevel === undefined && checkId === undefined) addLevelingId(sender)
+//	const amountXp = Math.floor(Math.random() * (15 - 25 + 1) + 15) //Math.floor(Math.random() * 10) + 500
+////	const requiredXp = 5 * Math.pow(currentLevel, (5 / 2)) + 50 * currentLevel + 100 //5000 * (Math.pow(2, currentLevel) - 1)
+//	const getLevel = getLevelingLevel(sender)
+//	const namelv = checkId
+//	addLevelingXp(sender, amountXp)
+//	if (requiredXp <= getLevelingXp(sender)) {
+//	addLevelingLevel(sender, 1)
+//	const lvup =  `✴ _*🧗🏻‍♂️S͟u͟b͟e͟s͟ ͟d͟e͟ ͟n͟i͟v͟e͟l͟!͟*_ ✴
 	
-	𓆩*𓆪 *💠 Nombre:* @${namelv.split('@')[0]} 𓆩*𓆪
+//	𓆩*𓆪 *💠 Nombre:* @${namelv.split('@')[0]} 𓆩*𓆪
 	
-	┎┈┈┈┈┈┈┈┈┈┈┈┈┈┈
-  	✨XP: ${getLevelingXp(sender)}
-  	📚Nivel: ${getLevel} ➫ ${getLevelingLevel(sender)}
-  	🕋rango: ${rango}
-	┖┈┈┈┈┈┈┈┈┈┈┈┈┈┈`
-	samu330.sendMessage(from, lvup, MessageType.text, {quoted: { key: {                
-		fromMe: false,
-                participant: `0@s.whatsapp.net`, ...(from ? { remoteJid: "status@broadcast" } : {})
-                },
-                message: {
-		"documentMessage": { "title": `✍🏻Nivel ${getLevelingXp(sender)}`, 'jpegThumbnail': fs.readFileSync('./src/ara.png')}
-		}}
-		})}
-	} catch (err) {
-	console.error(err)
-	}
-	}
-	}
+//	┎┈┈┈┈┈┈┈┈┈┈┈┈┈┈
+ // 	✨XP: ${getLevelingXp(sender)}
+//  	📚Nivel: ${getLevel} ➫ ${getLevelingLevel(sender)}
+//  	🕋rango: ${rango}
+//	┖┈┈┈┈┈┈┈┈┈┈┈┈┈┈`
+////	samu330.sendMessage(from, lvup, MessageType.text, {quoted: { key: {                
+//		fromMe: false,
+ //               participant: `0@s.whatsapp.net`, ...(from ? { remoteJid: "status@broadcast" } : {})
+//                },
+//                message: {
+//		"documentMessage": { "title": `✍🏻Nivel ${getLevelingXp(sender)}`, 'jpegThumbnail': fs.readFileSync('./src/ara.png')}
+//		}}
+//		})}
+//	} catch (err) {
+//	console.error(err)
+//	}
+//	}
+//	}
 	
 	const reply = async(teks) => {
             await samu330.sendMessage(from, teks, MessageType.text, { quoted: { key: {                
