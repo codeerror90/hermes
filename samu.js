@@ -2795,7 +2795,7 @@ exec(`magick './src/reg.jpg' -gravity west -fill '#00FF00' -font './src/font-gue
 //})
 //} catch {
 reply(`*「 SU REGISTRO FUE UN EXITO😉 」*\n\n *◦ Nombre : ${nombre}*\n*◦ Numero : wa.me/${sender.split("@")[0]}*\n*◦ Edad : ${edad}*\n*◦ Hora De Registro : ${time}*\n*◦ SN : ${serialUser}*\n\n *📋Su registro fue todo un exito*\n\n*Para Continuar Usando a NYANBOT Escriba el siguiente comando: ${prefix}menu*`)
-}
+})
 addFilter(from)	    
 break
 
