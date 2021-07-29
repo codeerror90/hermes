@@ -966,15 +966,6 @@ Menu = `
 ➫ြHeͩrͦmⷴeͭsͨ😈.li Oℱịcιɑl.li
 🔐Hola *${pushname}* ${timeFt}
 
-_Tipo de usuario:_ ${tipoDeUsr}
-┎┈┈┈┈┈┈┈┈┈┈┈┈┈┈
-✨XP: ${getLevelingXp(sender)}
-📚Nivel: ${getLevelingLevel(sender)}
-🕋rango: ${rango}
-┖┈┈┈┈┈┈┈┈┈┈┈┈┈┈
-🕐Son las *${hora}*\n\n🍃Hoy es *${week1}  ${calender1}*
-${opcion}
-
 ======[ *Versión 3.22* ]======
 
 *⚙ LA KEY DE LA API FUE DESHABILITADA, PERO SI LA NECECITAS PUEDES ESCRIBIRME PARA QUE TE LA COMPARTA, ESTO ES POR MOTIVOS DE SEGURIDAD, YA QUE LA ANTERIOR KEY FUE EXPUESTA Y BLOQUEADA POR ESTA RAZON. ⚙*
