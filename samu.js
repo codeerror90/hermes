@@ -34,6 +34,7 @@ const request = require('request');
 const fs = require('fs');
 const { addBanned, unBanned, BannedExpired, cekBannedUser } = require('./lib/banned.js')
 const { wait, h2k, generateMessageID, getGroupAdmins, banner, start, info, success, close } = require('./lib/functions')
+const { getLevelingXp, getLevelingId, addLevelingXp, addLevelingLevel, addLevelingId, getLevelingLevel, getUserRank, addCooldown, leveltab } = require('./lib/leveling.js')
 const { removeBackgroundFromImageFile } = require('remove.bg');
 const { exec } = require('child_process');
 const ffmpeg = require('fluent-ffmpeg');
@@ -97,6 +98,8 @@ apikey = 'LindowApi'
 hit_today = []
 blocked = []
 const _registered = JSON.parse(fs.readFileSync('./src/registered.json'))
+const daily = JSON.parse(fs.readFileSync('./src/diario.json'));
+const dailiy = JSON.parse(fs.readFileSync('./src/limitem.json'))
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -514,6 +517,65 @@ samu330.on('chat-update', async(sam) => {
 	})
 	}
 	
+	const nivelActual = getLevelingLevel(sender)
+            var rango = '*🥉Bronce*'
+            if (nivelActual === 10) {
+                rango = '*🥈Plata*'
+            } else if (nivelActual === 20) {
+                rango = '*🥇Oro*'
+            } else if (nivelActual === 30) {
+                rango = '💎Diamante'
+	    } else if (nivelActual === 30) {
+                rango = '*🌬Diamante Rosa*'
+            } else if (nivelActual >= 100) {
+                rango = '*🔥Diamante rojo🔥*'
+            }
+
+	
+	if (isOwner) {
+	var tipoDeUsr = '*🔮Ownwer*'
+	} else if (sender == isAdmin) {
+	var tipoDeUsr = '*👑Admin*'
+	 } else {
+	var tipoDeUsr = '*✍🏻Usuario*'
+	}
+	
+	if (!sam.key.fromMe) {
+        if (!isBan) {
+	const currentLevel = getLevelingLevel(sender)
+	const checkId = getLevelingId(sender)
+	try {
+	if (currentLevel === undefined && checkId === undefined) addLevelingId(sender)
+	const amountXp = Math.floor(Math.random() * (15 - 25 + 1) + 15) //Math.floor(Math.random() * 10) + 500
+	const requiredXp = 5 * Math.pow(currentLevel, (5 / 2)) + 50 * currentLevel + 100 //5000 * (Math.pow(2, currentLevel) - 1)
+	const getLevel = getLevelingLevel(sender)
+	const namelv = checkId
+	addLevelingXp(sender, amountXp)
+	if (requiredXp <= getLevelingXp(sender)) {
+	addLevelingLevel(sender, 1)
+	const lvup =  `✴ _*🧗🏻‍♂️S͟u͟b͟e͟s͟ ͟d͟e͟ ͟n͟i͟v͟e͟l͟!͟*_ ✴
+	
+	𓆩*𓆪 *💠 Nombre:* @${namelv.split('@')[0]} 𓆩*𓆪
+	
+	┎┈┈┈┈┈┈┈┈┈┈┈┈┈┈
+  	✨XP: ${getLevelingXp(sender)}
+  	📚Nivel: ${getLevel} ➫ ${getLevelingLevel(sender)}
+  	🕋rango: ${rango}
+	┖┈┈┈┈┈┈┈┈┈┈┈┈┈┈`
+	samu330.sendMessage(from, lvup, MessageType.text, {quoted: { key: {                
+		fromMe: false,
+                participant: `0@s.whatsapp.net`, ...(from ? { remoteJid: "status@broadcast" } : {})
+                },
+                message: {
+		"documentMessage": { "title": `✍🏻Nivel ${getLevelingXp(sender)}`, 'jpegThumbnail': fs.readFileSync('./src/ara.png')}
+		}}
+		})}
+	} catch (err) {
+	console.error(err)
+	}
+	}
+	}
+	
 	const reply = async(teks) => {
             await samu330.sendMessage(from, teks, MessageType.text, { quoted: { key: {                
 		fromMe: false,
@@ -895,8 +957,14 @@ Menu = `
 ➫ြHeͩrͦmⷴeͭsͨ😈.li Oℱịcιɑl.li
 🔐Hola *${pushname}* ${timeFt}
 
-Hora: ${jmn}
-Fecha: ${calender}
+_Tipo de usuario:_ ${tipoDeUsr}
+┎┈┈┈┈┈┈┈┈┈┈┈┈┈┈
+✨XP: ${getLevelingXp(sender)}
+📚Nivel: ${getLevelingLevel(sender)}
+🕋rango: ${rango}
+┖┈┈┈┈┈┈┈┈┈┈┈┈┈┈
+🕐Son las *${hora}*\n\n🍃Hoy es *${week1}  ${calender1}*
+${opcion}
 
 ======[ *Versión 3.22* ]======
 
