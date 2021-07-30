@@ -3068,8 +3068,8 @@ samu330.sendMessage(from, baleg, MessageType.image, {quoted: sam})
 }
 break
 case 'hermesprefix':
-prefix = '$'
-reply(`*EL PREFIJO DE HERMES AHORA ES $*`)
+prefix = `${q}`
+reply(`*EL PREFIJO DE HERMES AHORA ES ${q}!*`)
 break		
 		
 case 'noprefix':
