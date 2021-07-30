@@ -3067,6 +3067,11 @@ baleg = await getBuffer(`https://api.memegen.link/images/custom/${wo1}/${wo2}.pn
 samu330.sendMessage(from, baleg, MessageType.image, {quoted: sam})
 }
 break
+case 'hermesprefix':
+prefix = '$'
+reply(`*EL PREFIJO DE HERMES AHORA ES $*`)
+break		
+		
 case 'noprefix':
 prefix = ''
 reply(`*EL PREFIJO YA NO ES NECESARIO AHORA!*`)
