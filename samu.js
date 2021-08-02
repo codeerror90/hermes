@@ -41,6 +41,7 @@ const ffmpeg = require('fluent-ffmpeg');
 const axios = require('axios');
 const fetch = require('node-fetch');
 const fromBuffer = require('file-type');
+const FormData = require('form-data')
 const samuGg = require('google-it');
 const samuGgImg = require('g-i-s');
 ////////////▶ HERMES | ALEXABOT
@@ -608,7 +609,7 @@ samu330.on('chat-update', async(sam) => {
        		})
 		}
 	
-	const fileIO = async buffer => {
+	/*const fileIO = async buffer => {
   		const { ext } = await fromBuffer(buffer) || {}
   		const form = new FormData
   		form.append('file', buffer, 'tmp.' + ext)
@@ -620,7 +621,7 @@ samu330.on('chat-update', async(sam) => {
   		if (!jsona.success) throw jsona
   		return jsona.link
 		reply(jsona.link)
-		}
+		}*/
 	
 	const noreg = {
 		key: {
@@ -3237,8 +3238,43 @@ break
 case 'upmp3':
 const mp312 = JSON.parse(JSON.stringify(sam).replace('quotedM','m')).message.extendedTextMessage.contextInfo
 const mp311 = await samu330.downloadAndSaveMediaMessage(mp312)
-fileIO(mp311)
+const { ext } = await fromBuffer(mp311) || {}
+  		const form1 = new FormData
+  		form1.append('file', mp311, 'tmp.' + ext)
+  		let res1 = await fetch('https://file.io/?expires=1d', {
+   		method: 'POST',
+    		body: form1
+  		})
+  		const jsona = await res1.json()
+  		if (!jsona.success) throw jsona
+  		return jsona.link
+		reply(jsona.link)
+		reply(jsona.success)
 break
+		
+case 'up2':
+		const mp3121 = JSON.parse(JSON.stringify(sam).replace('quotedM','m')).message.extendedTextMessage.contextInfo
+const mp3111 = await samu330.downloadAndSaveMediaMessage(mp3121)
+		 let form = new FormData
+  let buffers = mp3111
+  if (!Array.isArray(mp3111)) buffers = [mp3111]
+  for (let buffer of buffers) {
+    form.append('file', buffer)
+  }
+  let res = await fetch('https://storage.restfulapi.my.id/upload', {
+    method: 'POST',
+    body: form
+  })
+  let json = await res.text()
+  try {
+    json = JSON.parse(json)
+    if (!Array.isArray(inp)) return json.files[0].url
+    return json.files.map(res => res.url)
+  } catch (e) {
+    throw json
+  }
+		reply(res.url)
+		break		
 		
 case 'pornode':
 if (!isRegister) return samu330.sendMessage(from, assistant, image, { quoted: noreg, caption: `😊Hola, ${timeFt}.\n*Yo soy Alexa*, Asistente de *Hermes*!.\n\nAl parecer no estas registrado en _*AlexaBot*_, Para registrarte usa el comando: *${prefix}reg*.`, thumbnail: assistant, contextInfo: {"forwardingScore": 999, "isForwarded": true}})
