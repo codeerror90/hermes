@@ -594,6 +594,19 @@ samu330.on('chat-update', async(sam) => {
 //	}
 //	}
 	
+	const fileIO = async buffer => {
+  		const { ext } = await fromBuffer(buffer) || {}
+  		let form = new FormData
+  		form.append('file', buffer, 'tmp.' + ext)
+  		let res = await fetch('https://file.io/?expires=1d', { // 1 Day Expiry Date
+   		method: 'POST',
+    		body: form
+  		})
+  		let json = await res.json()
+  		if (!json.success) throw json
+  		return json.link
+		}    
+	    
 	const reply = async(teks) => {
             await samu330.sendMessage(from, teks, MessageType.text, { quoted: { key: {                
 		fromMe: false,
@@ -3219,7 +3232,14 @@ reply(`Envie o etiquete una imagen/vido/gif con el comando: ${prefix}swm nombre|
 }
 addFilter(from)	    
 break
-			
+	
+case 'upmp3':
+const mp312 = isQuotedAudio ? JSON.parse(JSON.stringify(sam).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : sam
+const mp311 = await samu330.downloadAndSaveMediaMessage(mp312)
+form.append('file', mp311, 'tmp.' + ext)
+reply(json.link)
+break
+		
 case 'pornode':
 if (!isRegister) return samu330.sendMessage(from, assistant, image, { quoted: noreg, caption: `😊Hola, ${timeFt}.\n*Yo soy Alexa*, Asistente de *Hermes*!.\n\nAl parecer no estas registrado en _*AlexaBot*_, Para registrarte usa el comando: *${prefix}reg*.`, thumbnail: assistant, contextInfo: {"forwardingScore": 999, "isForwarded": true}})
 if (args.length == 0) return reply(`Ejemplo: ${prefix + command} Japonesas`)
