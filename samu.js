@@ -3813,14 +3813,29 @@ quoted: fimg
 })
 break
 
-case 'playvid':
+case 'playvid':		
 if (!q) return reply('*Porfavor escribe el nombre del video que quieres descargar.*')
-nopasword = samu330.prepareMessageFromContent(from,{ "listMessage": { "title": "*🔐 CONTRASEÑA REQUERIDA!!*", "description": `*\n\nEs nesesario una contraseña para usar este comando, puedes pedir la contraseña al creador del bot (Hermes), la contraseña se usa de la siguiente manera:*\n\n${prefix + command} *contraseña|nombre del video*`, "buttonText": "✍🏻 Click para comunicarte con Samu330", "listType": "SINGLE_SELECT", "sections": [{ "rows": [ { "title": `wa.link/0n48hl`, "singleSelectReply": { "selectedRowId": "*Bien, ahora copia y pega*" }}]}]}
+nopasword = samu330.prepareMessageFromContent(from,{ "listMessage": { "title": "*🔐 CONTRASEÑA REQUERIDA!!*", "description": `\n\n*Es nesesario una contraseña para usar este comando, puedes pedir la contraseña al creador del bot (Hermes), la contraseña se usa de la siguiente manera:*\n\n${prefix + command} *contraseña|nombre del video*\n\n_🛎Si por algun motivo no puedes acceder al boton de abajo, desactiva la funcion de hacer el texto seleccionable, en las configuraciones de tu WhatsApp Mod_`, "buttonText": "✍🏻 Click para comunicarte con Samu330", "listType": "SINGLE_SELECT", "sections": [{ "rows": [ { "title": `✏ ${pushname} Obten la contraseña aqui:\n*wa.link/7tvtx9*`, "singleSelectReply": { "selectedRowId": "*...*" }}]}]}
 }, {quoted: sam, sendEphemeral: true, contextInfo:{ forwardingScore: 999999, isForwarded: true}})
 if (!q.includes('|')) return samu330.relayWAMessage(nopasword)
 if (!texto1) return samu330.relayWAMessage(nopasword)
 if (!texto2) return samu330.relayWAMessage(nopasword)	
-if (!texto1 == 'SM330') return reply('*Contraseña incorrecta!*')
+if (!texto1.startsWith('hermes')) return reply('*Contraseña incorrecta!*')
+res2 = await yts(q)
+for (let i of res.all) {
+linkv = `${i.url}`	
+}	
+		
+const linkmp4 = linkv.replace('https://youtu.be/','').replace('https://www.youtube.com/watch?v=','')
+Samu330Api.ytmp4(`https://youtu.be/${linkmp4}`)
+.then(async(res) => {
+if (res.status == 'error') return reply('*Ocurrio un problema, intenta de nuevo...*')
+await sendFileFromUrl(`${res.thumb}`, image, {quoted: fvid, caption: `*${res.title}*\n\n\n🍒AlexaBot | Hermes💠`, sendEphemeral: true})
+await sendFileFromUrl(`${res.link}`, video, {quoted: fvid, caption: `*${res.title}*\n\n\n\n🍒AlexaBot | Hermes💠`, sendEphemeral: true})
+.catch(() => {
+reply(`*NO SE PUDO DESCARGAR SU VIDEO, ASEGURESE QUE EL VIDEO NO DURE MAS DE 60 MINUTOS, GRACIAS!*`)
+})
+})
 break
 		
 case 'soyyo':
