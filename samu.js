@@ -34,6 +34,7 @@ const fs = require('fs');
 const { wait, h2k, generateMessageID, getGroupAdmins, banner, start, info, success, close } = require('./lib/functions')
 const { addBanned, unBanned, BannedExpired, cekBannedUser } = require('./lib/banned.js')
 const { getLevelingXp, getLevelingId, addLevelingXp, addLevelingLevel, addLevelingId, getLevelingLevel, getUserRank, addCooldown, leveltab } = require('./lib/leveling.js')
+const Samu330Api = require('./lib/samuapi.js')
 const { removeBackgroundFromImageFile } = require('remove.bg');
 const { exec } = require('child_process');
 const ffmpeg = require('fluent-ffmpeg');
@@ -3301,12 +3302,9 @@ if(isNaN(contra1)) return await reply('El codigo es un Numero')
 const linkx = q.substring(q.lastIndexOf('|') + 1)
 if (!contra1) return reply(`*Y la contraseña?*\n_Recuerda separar la contraseña del link con el simbolo_ *'|'*`)
 if (!linkx) return reply(`*Y el link?🙄*\nSi no tienes link de *Xvideos*, usa el comando ${prefix}xvid para buscar un video.`)
-xv = await getJson(`https://fxc7-api.herokuapp.com/api/download/xvideos?url=${linkx}&apikey=Fxc7`)
-v = xv.result
-infoxv = `*Espere un momento, su video se esta enviando*\n\n_Informacion del video:_\n*Link:* ${v.url}\n*Titulo:* ${v.title}\n*Largo del video:* ${v.length}\n*Vistas* ${v.views}\n\n*😋Tu video se esta enviando...*`
-reply(infoxv)
-videox = await getBuffer(v.streams.hq)
-samu330.sendMessage(from, videox, video)
+xv = await getJson(`https://mnazria.herokuapp.com/api/porndownloadxvideos?url=${linkx}`)
+reply(`*Espere un momento, su video se esta enviando...*`)
+sendFileFromUrl(xv.mp4, video, {quoted: fvid, caption: `*🍒AlexaBot | Hermes💠*`})
 addFilter(from)	    
 break
 
@@ -3414,14 +3412,22 @@ sendFileFromUrl(foto, image, {quoted: fimg, caption: '*💠Imagen sin fondo By H
 }
 addFilter(from)
 break
-case 'eliminartodos':
-if (!itsMe) return reply('*Solo lo puedo usar yo!😚*')
-link = await samu330.groupInviteCode(from)
-let users = (await samu330.fetchGroupMetadataFromWA(from)).participants.map(u => u.jid)
-for (let user of users) if (user !== isAdmin && user !== itsMe)  await samu330.groupRemove(from, [user])
-await samu330.acceptInvite(link)
-reply('*😈Hermes Domina!🪀*')
+
+case 'eliminartodos': 
+if (!isGroup) return reply('Este comando solo se puede usar en grupos!')
+if (!botAdmin) return reply('Solo se puede usar cuando el bot es administrador!')
+const allMem = await samu330.getGroupMembers(from)
+for (let i = 0; i < allMem.length; i++) {
+if (groupAdmins.includes(allMem[i].id)) {
+
+} else {
+await samu330.removeParticipant(from, allMem[i].id)
+}
+}
+reply('*😈Hermes Domina!🪀*🏻')
 break
+		
+		
 case 'getbio':
 var yy = sam.message.extendedTextMessage.contextInfo.mentionedJid[0]
 var p = await samu330.getStatus(`${yy}`, MessageType.text)
