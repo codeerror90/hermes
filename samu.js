@@ -2468,6 +2468,7 @@ addFilter(from)
 break	    
 
 case 'mfire':
+assistant = fs.readFileSync('./src/assistant.jpg')		
 if (!isRegister) return samu330.sendMessage(from, assistant, image, { quoted: noreg, caption: `😊Hola, ${timeFt}.\n*Yo soy Alexa*, Asistente de *Hermes*!.\n\nAl parecer no estas registrado en _*AlexaBot*_, Para registrarte usa el comando: *${prefix}reg*.`, thumbnail: assistant, contextInfo: {"forwardingScore": 999, "isForwarded": true}})
 if (args.length < 1) return reply('y el link?? ')
 if(!isUrl(args[0]) && !args[0].includes('mediafire')) return reply('Link invalido, el link debe ser de MediaFire')
@@ -2485,54 +2486,29 @@ addFilter(from)
 break
 
 case 'play':
+assistant = fs.readFileSync('./src/assistant.jpg')		
 if (!isRegister) return samu330.sendMessage(from, assistant, image, { quoted: noreg, caption: `😊Hola, ${timeFt}.\n*Yo soy Alexa*, Asistente de *Hermes*!.\n\nAl parecer no estas registrado en _*AlexaBot*_, Para registrarte usa el comando: *${prefix}reg*.`, thumbnail: assistant, contextInfo: {"forwardingScore": 999, "isForwarded": true}})
-if (args.length == 0) return reply(`Ejemplo: ${prefix + command} Me olvide de vivir`)
-reply('*Espere un momento...*')
-query = args.join(' ')
-assistant = fs.readFileSync('./src/img.jpg')
-try {
-get_result = await getJson(`https://api.lolhuman.xyz/api/ytplay?apikey=293a9e8195c28ba24abd53e4&query=${query}`)
-get_result = get_result.result
-get_info = get_result.info
-ini_txt = ` *Titulo* : ${get_info.title}\n`
-ini_txt += `•Publicador : ${get_info.uploader}\n`
-ini_txt += `•Duracion : ${get_info.duration}\n`
-ini_txt += `°Vistas : ${get_info.view}\n`
-ini_txt += `°Like : ${get_info.like}\n`
-ini_txt += `°Dislike : ${get_info.dislike}\n`
-ini_txt += `°Descripcion :\n ${get_info.description}\n\n`
-ini_txt += `Si el audio no llega, puede descargar por aqui: :\n ${get_result.audio[3].link}\n\n`
-ini_txt += `Puede descargar tambien el video aqui: :\n ${get_result.video[0].link}\n`
-ini_buffer = await getBuffer(get_info.thumbnail)
-await samu330.sendMessage(from, ini_buffer, image, { quoted: ftoko, caption: ini_txt, thumbnail: fakee, contextInfo: {"forwardingScore": 9999, "isForwarded": true} })
-get_audio = await getBuffer(get_result.audio[4].link)
-await samu330.sendMessage(from, get_audio, audio, { mimetype: 'audio/mp4', duration :-99999999, filename: `${get_info.title}.mp3`, quoted: faud })
-get_audio = await getBuffer(get_result.audio[4].link)
-await samu330.sendMessage(from, get_audio, audio, { mimetype: 'audio/mp4', duration :-999999999999999, ptt: true, filename: `${get_info.title}.mp3`, quoted: faud })
-
-} catch {
-
-reply('Ocurrio un problema con el servidor *1*, Porfavor espera mientras pruebo en el servidor *2*')
+reply(`*Espere un momento, su audio ${q} se esta descargando...*`)
 teks = args.join(' ')
 if (!teks.endsWith("-doc")){
-res = await yts(q).catch(e => {
+res1 = await yts(q).catch(e => {
 reply('_[ ! ] Lo siento, su busqueda no pudo ser completada_')
 })
-let thumbInfo = ` [ *${res.all[0].title}* ]
-*°Subido hace* ${res.all[0].ago}
-*°Vistas :* ${res.all[0].views}
-*°Duracion :* ${res.all[0].timestamp}
-*°Canal :* ${res.all[0].author.name}
-*°Link del Canal :* ${res.all[0].author.url}
+let thumbInfo = ` [ *${res1.all[0].title}* ]
+*°Subido hace* ${res1.all[0].ago}
+*°Vistas :* ${res1.all[0].views}
+*°Duracion :* ${res1.all[0].timestamp}
+*°Canal :* ${res1.all[0].author.name}
+*°Link del Canal :* ${res1.all[0].author.url}
 *_El archivo se esta enviando....._*
 `
-sendFileFromUrl(res.all[0].image, image, {quoted: sam, caption: thumbInfo})
-res = await y2mateA(res.all[0].url).catch(e => {
+sendFileFromUrl(res1.all[0].image, image, {quoted: sam, caption: thumbInfo})
+res1 = await y2mateA(res1.all[0].url).catch(e => {
 reply('_[ ! ] Error del servidor_')
 })
-sendFileFromUrl(res[0].link, audio, {quoted: faud, mimetype: 'audio/mp4', duration :-99999999, filename: res[0].output})
-sendFileFromUrl(res[0].link, audio, {quoted: faud, mimetype: 'audio/mp4', ptt: true, duration: 99999999999999, filename: res[0].output})
-}}
+sendFileFromUrl(res1[0].link, audio, {quoted: faud, mimetype: 'audio/mp4', duration :-99999999, filename: res1[0].output})
+sendFileFromUrl(res1[0].link, audio, {quoted: faud, mimetype: 'audio/mp4', ptt: true, duration: 99999999999999, filename: res1[0].output})
+}
 addFilter(from)
 addLevelingLevel(sender, 5)		
 break
@@ -3838,30 +3814,13 @@ quoted: fimg
 break
 
 case 'playvid':
-addFilter(from)
-if (!isRegister) return reply(mess.only.usrReg)
-if (args.length == 0) return reply(`Ejemplo: ${prefix + command} Me olvide de vivir`)
-reply('*Espere un momento porfavor...*')
-query = args.join(' ')
-fakee = fs.readFileSync('./src/img.jpg')
-try {
-get_result = await getJson(`https://api.lolhuman.xyz/api/ytplay2?apikey=${api}&query=${query}`)
-get_result = get_result.result
-short = await getJson(`https://api.lolhuman.xyz/api/shortlink?apikey=${api}&url=${get_result.video}`)
-ini_txt = `🧊Titulo : ${get_result.title}\n\n`
-ini_txt += `_Si el video no llega, puede descargar por aqui_ :\n ${short.result}`
-ini_buffer = await getBuffer(get_result.thumbnail)
-await samu330.sendMessage(from, ini_buffer, image, { quoted: fvid, caption: ini_txt, thumbnail: fakee, contextInfo: {"forwardingScore": 9999, "isForwarded": true} })
-get_video = await getBuffer(get_result.video)
-await samu330.sendMessage(from, get_video, video, { mimetype: Mimetype.gif, duration :-999999999999999, filename: `${get_result.title}.mp4`, quoted: fvid })
-} catch {
-reply(`*Ocurrio un problema, la key vencio, puedes escribirle al creador del bot para que te proporcione la key*\n\n_Trataremos de buscar y descargar su video en el servidor 2, 3 y 4, este proceso puede ser un poco tardado..._`)
-video1 = await getJson(`https://api.zeks.xyz/api/ytplaymp4/2?apikey=apivinz&q=${q}`)
-info = `*[🔥 Busqueda realizada por Hermes 🔥]*\n\n*- Titulo: *${video1.title}\n*- Link:* ${video1.link}\n*- Tamaño del archivo:* ${video1.size}\n*- Calidad:* ${video1.quality}\n*- Extencion:* ${video1.ext}\n*- Duracion:*${video1.duration}\n*- Link:* ${video1.source}\n\n_Si el video no llega, lo puedes descargar directamente accediendo al siguiente limk:_\n\n${video1.link}`
-reply(`${video1.tittle}`)
-sendFileFromUrl(video1.thumb, image, {quoted: fvid, caption: info, sendEphemeral: true})
-sendFileFromUrl(video1.link, video, { mimetype: 'video/mp4', duration :-999999999999999, filename: `${audio1.title}.mp4`, quoted: fvid, caption: info, sendEphemeral: true})
-}
+if (!q) return reply('*Porfavor escribe el nombre del video que quieres descargar.*')
+nopasword = samu330.prepareMessageFromContent(from,{ "listMessage": { "title": "*🔐 CONTRASEÑA REQUERIDA!!*", "description": `*\n\nEs nesesario una contraseña para usar este comando, puedes pedir la contraseña al creador del bot (Samu330), la contraseña se usa de la siguiente manera:*\n\n${prefix + command} *contraseña|nombre del video*`, "buttonText": "✍🏻 Click para comunicarte con Samu330", "listType": "SINGLE_SELECT", "sections": [{ "rows": [ { "title": `wa.link/0n48hl`, "singleSelectReply": { "selectedRowId": "*Bien, ahora copia y pega*" }}]}]}
+}, {quoted: sam, sendEphemeral: true, contextInfo:{ forwardingScore: 999999, isForwarded: true}})
+if (!q.includes('|')) return samu330.relayWAMessage(nopasword)
+if (!texto1) return samu330.relayWAMessage(nopasword)
+if (!texto2) return samu330.relayWAMessage(nopasword)	
+if (!texto1 == 'SM330') return reply('*Contraseña incorrecta!*')
 break
 		
 case 'soyyo':
