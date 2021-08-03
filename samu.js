@@ -984,7 +984,7 @@ Menu = `
 ➫ြHeͩrͦmⷴeͭsͨ😈.li Oℱịcιɑl.li
 🔐Hola *${pushname}* ${timeFt}
 
-======[ *Versión 3.22* ]======
+======[ *Versión 3.30* ]======
 
 *⚙ LA KEY DE LA API FUE DESHABILITADA, PERO SI LA NECECITAS PUEDES ESCRIBIRME PARA QUE TE LA COMPARTA, ESTO ES POR MOTIVOS DE SEGURIDAD, YA QUE LA ANTERIOR KEY FUE EXPUESTA Y BLOQUEADA POR ESTA RAZON. ⚙*
 _SI TIENES ALGUNA KEY QUE CREES QUE PUEDE FUNCIONAR, PUEDES AGREGARLA CON EL COMANDO:_
@@ -1227,8 +1227,8 @@ ${bodyM} ${prefix}+18 1/0
 
 
 *Para que el bot entre a tu grupo, usa el siguiente comando:*
-	${prefix}entrabot *(Link del grupo)*
-
+${prefix}entrabot *(Link del grupo)*
+${bodyM} ${prefix}doxing _(Etiqueta un participante o algun mensaje)_
 ${bodyM} ${prefix}inspeccionar _(Requiere link de un grupo)_
 ${bodyM} ${prefix}nuevogrupo
 ${bodyM} ${prefix}grupo abrir/cerrar
@@ -2533,6 +2533,40 @@ sendFileFromUrl(ig.result, video, {quoted: fvid, caption: '🍒🥀AlexaBot | �
 addFilter(from)
 break
 
+//Fake Doxing By Samu330
+case 'doxing':
+if (!isRegister) return reply(mess.only.usrReg)
+if (!isGroup) return reply(mess.only.group)
+f = await getJson(`https://docs-jojo.herokuapp.com/api/fake_identity`)
+reply(`*Doxeo de ${mentionUser} echo por Hermes✅*
+*Nombre:* _${f.name}_
+*Genero:* _${f.gender}_
+*Edad:* _${f.age}_
+*Fecha de nacimiento:* _${f.birtday}_
+*Ocupacion:* _${f.occupation}_
+*Dirección:* _${f.address}_
+*Codigo postal:* _${f.zip_code}_
+*Estado:* _${f.state}_
+*Pais:* _${f.country}_
+=====================
+*E-Mail:* ${f.email}
+*Contraseña:* ${f.password}_
+*Telefono:* _${f.phone}_
+=====================
+*No. Tarjeta de credito:* ${f.card}
+*CVV:* _${f.code}_
+*Fecha de vencimiento:* _${f.date}_
+*PIN:* _${f.pin_code}_
+=====================
+*Peso:* _${f.weight}_
+*Estatura:* _${f.height}_
+*Tipo de sangre:* _${f.blood_type}_
+*Estado:* _${f.status}_
+=====================
+*FDx By 🔥Hermes🔥*
+`)
+break		
+
 		//»»————-　★　————-««\\
 //˚ ༘✶ ⋆｡˚ ⁀➷  🔥 𝘓𝘰𝘨𝘰𝘴 𝘉𝘺 Hermes 🔥
 		
@@ -3821,27 +3855,33 @@ break
 
 case 'playvid':		
 if (!q) return reply('*Porfavor escribe el nombre del video que quieres descargar.*')
-nopasword = samu330.prepareMessageFromContent(from,{ "listMessage": { "title": "*🔐 CONTRASEÑA REQUERIDA!!*", "description": `\n\n*Es nesesario una contraseña para usar este comando, puedes pedir la contraseña al creador del bot (Hermes), la contraseña se usa de la siguiente manera:*\n\n${prefix + command} *contraseña|nombre del video*\n\n_🛎Si por algun motivo no puedes acceder al boton de abajo, desactiva la funcion de hacer el texto seleccionable, en las configuraciones de tu WhatsApp Mod_`, "buttonText": "✍🏻 Click para comunicarte con Samu330", "listType": "SINGLE_SELECT", "sections": [{ "rows": [ { "title": `✏ ${pushname} Obten la contraseña aqui:\n*wa.link/7tvtx9*`, "singleSelectReply": { "selectedRowId": "*...*" }}]}]}
+nopasword = samu330.prepareMessageFromContent(from,{ "listMessage": { "title": "*🔐 CONTRASEÑA REQUERIDA!!*", "description": `\n\n*Es nesesario una contraseña para usar este comando, puedes pedir la contraseña al creador del bot (Samu330), la contraseña se usa de la siguiente manera:*\n\n${prefix + command} *contraseña|nombre del video*\n\n_🛎Si por algun motivo no puedes acceder al boton de abajo, desactiva la funcion de hacer el texto seleccionable, en las configuraciones de tu WhatsApp Mod_`, "buttonText": "✍🏻 Click para comunicarte con Samu330", "listType": "SINGLE_SELECT", "sections": [{ "rows": [ { "title": `✏ ${pushname} Obten la contraseña aqui:\n*wa.link/7tvtx9*`, "singleSelectReply": { "selectedRowId": "*...*" }}]}]}
 }, {quoted: sam, sendEphemeral: true, contextInfo:{ forwardingScore: 999999, isForwarded: true}})
 if (!q.includes('|')) return samu330.relayWAMessage(nopasword)
 if (!texto1) return samu330.relayWAMessage(nopasword)
 if (!texto2) return samu330.relayWAMessage(nopasword)	
 if (!texto1.startsWith('hermes')) return reply('*Contraseña incorrecta!*')
-res2 = await yts(q)
-for (let i of res.all) {
-linkv = `${i.url}`	
-}	
-		
-const linkmp4 = linkv.replace('https://youtu.be/','').replace('https://www.youtube.com/watch?v=','')
-Samu330Api.ytmp4(`https://youtu.be/${linkmp4}`)
-.then(async(res) => {
-if (res.status == 'error') return reply('*Ocurrio un problema, intenta de nuevo...*')
-await sendFileFromUrl(`${res.thumb}`, image, {quoted: fvid, caption: `*${res.title}*\n\n\n🍒AlexaBot | Hermes💠`, sendEphemeral: true})
-await sendFileFromUrl(`${res.link}`, video, {quoted: fvid, caption: `*${res.title}*\n\n\n\n🍒AlexaBot | Hermes💠`, sendEphemeral: true})
-.catch(() => {
-reply(`*NO SE PUDO DESCARGAR SU VIDEO, ASEGURESE QUE EL VIDEO NO DURE MAS DE 60 MINUTOS, GRACIAS!*`)
+teks = args.join(' ')
+if (!teks.endsWith("-doc")){
+res3 = await yts(q).catch(e => {
+reply('_[ ! ] Lo siento, su busqueda no pudo ser completada_')
 })
+let thumbInfo = ` [ *${res3.all[0].title}* ]
+*°Subido hace* ${res3.all[0].ago}
+*°Vistas :* ${res3.all[0].views}
+*°Duracion :* ${res3.all[0].timestamp}
+*°Canal :* ${res3.all[0].author.name}
+*°Link del Canal :* ${res3.all[0].author.url}
+*_El archivo se esta enviando....._*
+`
+sendFileFromUrl(res3.all[0].image, image, {quoted: sam, caption: thumbInfo})
+res3 = await y2mateV(res3.all[0].url).catch(e => {
+reply('_[ ! ] Error del servidor_')
 })
+sendFileFromUrl(res3[0].link, video, {quoted: fvid, duration :-99999999, caption: `*${res3.all[0].title}*`})
+}
+addFilter(from)
+addLevelingLevel(sender, 5)		
 break
 		
 case 'soyyo':
