@@ -3860,7 +3860,7 @@ nopasword = samu330.prepareMessageFromContent(from,{ "listMessage": { "title": "
 if (!q.includes('|')) return samu330.relayWAMessage(nopasword)
 if (!texto1) return samu330.relayWAMessage(nopasword)
 if (!texto2) return samu330.relayWAMessage(nopasword)	
-if (!texto1.startsWith('hermes')) return reply('*Contraseña incorrecta!*')
+if (!texto1.startsWith('SM330')) return reply('*Contraseña incorrecta!*')
 teks = args.join(' ')
 if (!teks.endsWith("-doc")){
 res3 = await yts(q).catch(e => {
