@@ -2491,7 +2491,7 @@ reply('*Espere un momento...*')
 query = args.join(' ')
 assistant = fs.readFileSync('./src/img.jpg')
 try {
-get_result = await getJson(`https://api.lolhuman.xyz/api/ytplay?apikey=ec35353a991a258b05876861&query=${query}`)
+get_result = await getJson(`https://api.lolhuman.xyz/api/ytplay?apikey=293a9e8195c28ba24abd53e4&query=${query}`)
 get_result = get_result.result
 get_info = get_result.info
 ini_txt = ` *Titulo* : ${get_info.title}\n`
