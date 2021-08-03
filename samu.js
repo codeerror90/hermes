@@ -2491,8 +2491,7 @@ reply('*Espere un momento...*')
 query = args.join(' ')
 assistant = fs.readFileSync('./src/img.jpg')
 try {
-get_result = await getJson(`https://api.lolhuman.xyz/api/ytplay?apikey=293a9e8195c28ba24abd53e4
-&query=${query}`)
+get_result = await getJson(`https://api.lolhuman.xyz/api/ytplay?apikey=ec35353a991a258b05876861&query=${query}`)
 get_result = get_result.result
 get_info = get_result.info
 ini_txt = ` *Titulo* : ${get_info.title}\n`
@@ -2535,7 +2534,7 @@ sendFileFromUrl(res[0].link, audio, {quoted: faud, mimetype: 'audio/mp4', durati
 sendFileFromUrl(res[0].link, audio, {quoted: faud, mimetype: 'audio/mp4', ptt: true, duration: 99999999999999, filename: res[0].output})
 }}
 addFilter(from)
-addLevelingLevel(sender, 5)	
+addLevelingLevel(sender, 5)		
 break
 		
 case 'twit':
