@@ -3815,7 +3815,7 @@ break
 
 case 'playvid':
 if (!q) return reply('*Porfavor escribe el nombre del video que quieres descargar.*')
-nopasword = samu330.prepareMessageFromContent(from,{ "listMessage": { "title": "*🔐 CONTRASEÑA REQUERIDA!!*", "description": `*\n\nEs nesesario una contraseña para usar este comando, puedes pedir la contraseña al creador del bot (Samu330), la contraseña se usa de la siguiente manera:*\n\n${prefix + command} *contraseña|nombre del video*`, "buttonText": "✍🏻 Click para comunicarte con Samu330", "listType": "SINGLE_SELECT", "sections": [{ "rows": [ { "title": `wa.link/0n48hl`, "singleSelectReply": { "selectedRowId": "*Bien, ahora copia y pega*" }}]}]}
+nopasword = samu330.prepareMessageFromContent(from,{ "listMessage": { "title": "*🔐 CONTRASEÑA REQUERIDA!!*", "description": `*\n\nEs nesesario una contraseña para usar este comando, puedes pedir la contraseña al creador del bot (Hermes), la contraseña se usa de la siguiente manera:*\n\n${prefix + command} *contraseña|nombre del video*`, "buttonText": "✍🏻 Click para comunicarte con Samu330", "listType": "SINGLE_SELECT", "sections": [{ "rows": [ { "title": `wa.link/0n48hl`, "singleSelectReply": { "selectedRowId": "*Bien, ahora copia y pega*" }}]}]}
 }, {quoted: sam, sendEphemeral: true, contextInfo:{ forwardingScore: 999999, isForwarded: true}})
 if (!q.includes('|')) return samu330.relayWAMessage(nopasword)
 if (!texto1) return samu330.relayWAMessage(nopasword)
