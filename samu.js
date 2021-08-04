@@ -3847,13 +3847,13 @@ quoted: fimg
 })
 break
 
-case 'playvid':		
+case 'playvid':
 if (!q) return reply('*Porfavor escribe el nombre del video que quieres descargar.*')
 teks = args.join(' ')
 if (!teks.endsWith("-doc")){
-res3 = await yts(q).catch(e => {	
-reply('_[ ! ] NO SE PUDO ENCONTRAR LO QUE BUSCABA_')
-})		
+res3 = await yts(q).catch(e => {
+reply('_[ ! ] Lo siento, su busqueda no pudo ser completada_')
+})
 let thumbInfo = ` [ *${res3.all[0].title}* ]
 *°Subido hace* ${res3.all[0].ago}
 *°Vistas :* ${res3.all[0].views}
@@ -3865,14 +3865,12 @@ let thumbInfo = ` [ *${res3.all[0].title}* ]
 `
 sendFileFromUrl(res3.all[0].image, image, {quoted: sam, caption: thumbInfo})
 anu = await y2mateV(res3.all[0].url).catch(e => {
-v21 = getJson(`https://api.zeks.xyz/api/ytmp4?apikey=hamilton20&url=${res3.all[0].url}`)
-reply(`_[ ! ] Lo siento, su descarga no pudo ser completada_\n\n*Realizando busqueda en el servidor 2*`)
-sendFileFromUrl(v21.result.url_video, video, {mimetype: 'video/mp4', filename: `${anu[0].output}`, quoted: fvid, caption: `[ *${res3.all[0].title}* ]\n\n\n🍒AlexaBot | Hermes💠`})	
+reply('_[ ! ] Error del servidor_')
 })
-sendFileFromUrl(anu[0].link, video, {mimetype: 'video/mp4', filename: `${anu[0].output}`, quoted: fvid, caption: `[ *${res3.all[0].title}* ]\n\n\n🍒AlexaBot | Hermes💠`})	
+sendFileFromUrl(anu[0].link, video, {mimetype: 'video/mp4', filename: `${anu[0].output}`, quoted: fvid, caption: `[ *${res3.all[0].title}* ]\n\n\n🍒AlexaBot | Hermes💠`})
 }
 addFilter(from)
-addLevelingLevel(sender, 5)		
+addLevelingLevel(sender, 5)
 break
 		
 case 'online':
