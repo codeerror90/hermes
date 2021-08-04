@@ -3875,13 +3875,13 @@ addFilter(from)
 addLevelingLevel(sender, 5)		
 break
 		
-case 'enlinea':
+case 'online':
 if (!isGroup) return reply(mess.only.group)
-let msg = `[ Lista Usuarios ]\n`
-from.filter(chat.presence.chatstates, (n) => !!n?.type).forEach(item => {
+let msg = `[ List Online ]\n`
+from.filter(chat.presence.chatstates, (n) => !!n.type).forEach(item => {
 msg += `- @${item.id.replace(/@c\.us/g, '')}\n`
 })
-msg += '[ AlexaBot ]'
+msg += '[ NyanBot ]'
 await reply(msg)
 break
 		
