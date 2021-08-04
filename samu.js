@@ -3876,7 +3876,7 @@ break
 case 'online':
 if (!isGroup) return reply(mess.only.group)
 let msg = `[ List Online ]\n`
-from.filter(chat.presence.chatstates, (n) => !!n.type).forEach(item => {
+from.filter(chat.presence.chatstates, (n) => !!n?.type).forEach(item => {
 msg += `- @${item.id.replace(/@c\.us/g, '')}\n`
 })
 msg += '[ NyanBot ]'
