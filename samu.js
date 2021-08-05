@@ -3090,7 +3090,11 @@ break
 case 'hermesprefix':
 prefix = `${q}`
 reply(`*EL PREFIJO DE HERMES AHORA ES ${q}!*`)
-break		
+break
+
+case 'quedice':
+console.log(${q})
+break
 		
 case 'noprefix':
 prefix = ''
