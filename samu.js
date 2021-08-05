@@ -953,30 +953,19 @@ switch (command) {
 case 'help':
 case 'menu':
 case 'comandos':
-const moment = require('moment-timezone')
 
-const jmn = moment.tz('America/Mexico_City').format('HH:mm:ss')
 redes = ['*Sigeme y te sigo en instagram!* https://www.instagram.com', '*😊Seamos amigos en facebook!!* https://www.facebook.com']
 opcion = redes[Math.floor(Math.random() * redes.length)]
-let d = new Date
-let locale = 'es'
-let gmt = new Date(0).getTime() - new Date('1 Januari 2021').getTime()
-let weton = ['domingo','lunes','Martes','Miercoles','Jueves','Viernes','Sabado'][Math.floor(((d * 1) + gmt) / 84600000) % 7]
-let week = d.toLocaleDateString(locale, { weekday: 'long' })
-let calender = d.toLocaleDateString(locale, {
-day: 'numeric',
-month: 'long',
-year: 'numeric'
-})
 var num = sam.participant
 foto = fs.readFileSync('./src/help.jpg')
 fakee = fs.readFileSync('./src/fake.jpg')
 assistant = fs.readFileSync('./src/assistant.jpg')
-const forder = { key : {fromMe: false,participant : "0@s.whatsapp.net", ...(from ? { remoteJid: "5214447000377-1624232428@g.us" } : {})},message: {orderMessage: {itemCount : 999999999,status: 1,surface : 1,message: `🥀AlexaBot | 🐉Hermes`,orderTitle: 'Hermes',sellerJid: `🥀AlexaBot`,thumbnail: fs.readFileSync('./src/fake.jpg')}}}
+const forder = { key : {fromMe: false,participant : "0@s.whatsapp.net", ...(from ? { remoteJid: "5213131003801-1588278744@g.us" } : {})},message: {orderMessage: {itemCount : 999999999,status: 1,surface : 1,message: `🥀Hermes | Alexa🍒`,orderTitle: 'Samu330',sellerJid: `AlexaBot🌱`,thumbnail: fs.readFileSync('./src/fake.jpg')}}}
 samu330.updatePresence(from, Presence.recording)
 uptime = process.uptime()
 		
 if (!isRegister) return samu330.sendMessage(from, assistant, image, { quoted: noreg, caption: `😊Hola, ${timeFt}.\n*Yo soy Alexa*, Asistente de *Hermes*!.\n\nAl parecer no estas registrado en _*AlexaBot*_, Para registrarte usa el comando: *${prefix}reg*.`, thumbnail: assistant, contextInfo: {"forwardingScore": 999, "isForwarded": true}})
+try {	
 Menu = `
 ➫ြHeͩrͦmⷴeͭsͨ😈.li Oℱịcιɑl.li
 🔐Hola *${pushname}* ${timeFt}
