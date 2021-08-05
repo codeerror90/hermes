@@ -3093,7 +3093,7 @@ reply(`*EL PREFIJO DE HERMES AHORA ES ${q}!*`)
 break
 
 case 'quedice':
-console.log(${q}))
+console.log(`${q}`)
 break
 		
 case 'noprefix':
